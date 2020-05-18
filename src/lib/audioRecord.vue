@@ -3,17 +3,22 @@
     class="audioRecord"
     :class="{ active: recording, ready: isAudioAvailable }"
   >
-    <div class="record-btn" @click="startorstop">
+    <div class="record-btn" @click="start">
       <van-icon class="icon" name="stop-circle-o" size="2rem" />
     </div>
-    <van-overlay :show="showup" @click="showup = false">
-      <div class="wrapper" @click="showup = false">
-        <div class="block"><div>开始录音</div></div>
-      </div></van-overlay
-    >
+    <van-overlay :show="showup">
+      <div class="wrapper">
+        <div class="block">
+          <div>{{ this.$parent.input2 }}</div>
+          <van-button class="btn" type="default" size="normal" @click="stop">
+            <van-icon class="icon" name="stop-circle" size="4rem" />
+          </van-button>
+        </div>
+      </div>
+    </van-overlay>
     <van-overlay :show="showupstop" @click="showupstop = false">
       <div class="wrapper" @click="showup = false">
-        <div class="block"><div>终止录音</div></div>
+        <div class="blockend"><div>终止录音</div></div>
       </div></van-overlay
     >
   </div>
@@ -23,6 +28,7 @@
 /*eslint-disable*/
 import Recorder from "./recorder";
 import xfyunConfig from "./recorder/xfyun";
+
 const freezeProperty = (obj, key) => {
   Object.defineProperty(obj, key, {
     configurable: false,
@@ -41,21 +47,12 @@ export default {
       resultCache: {},
       result: "",
       responding: false,
-      clickornot: false,
       showup: false,
       showupstop: false,
     };
   },
   methods: {
-    startorstop(e) {
-      if (!this.clickornot) {
-        this.start();
-      } else {
-        this.stop();
-      }
-    },
     start(e) {
-      e.preventDefault();
       if (this.recording || (e && e.which !== 1)) return;
       if (!this.isAudioAvailable) {
         const config = this.getConfig;
@@ -68,19 +65,16 @@ export default {
       }
       this.reset();
       this.recording = true;
-      console.log(1111);
       this.recorder.start();
-      this.clickornot = true;
       this.showup = true;
       this.$emit("record-start");
     },
     stop(e) {
-      e && e.preventDefault();
       if (e && e.which !== 1) return;
       this.recording = false;
       this.recorder.stop();
       this.$emit("record-stop");
-      this.clickornot = false;
+      this.showup = false;
       this.showupstop = true;
       this.processing = true;
     },
@@ -226,12 +220,36 @@ export default {
   justify-content: center;
   height: 100%;
   .block {
+    padding: 5vw;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    div {
+      line-height: 30px;
+      color: white;
+      font-size: 1.2em;
+      margin-top: 8vh;
+    }
+    .btn {
+      border: none;
+      background: white;
+      position: absolute;
+      bottom: 7vh;
+      width: 4rem;
+      height: 4rem;
+      left: 50%;
+      margin-left: -2rem;
+      border-radius: 50%;
+    }
+  }
+  .blockend {
     text-align: center;
     width: 40vh;
     height: 20vh;
     background: #f1c959;
     border-radius: 20px 20px 20px 20px;
     div {
+      font-size: 1.2em;
       margin-top: 8vh;
       font-weight: bold;
     }

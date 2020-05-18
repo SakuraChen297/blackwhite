@@ -55,6 +55,7 @@ export default {
     return {
       input: "",
       value: 50,
+      input2: "",
     };
   },
   components: {
@@ -67,8 +68,10 @@ export default {
     showResult(text) {
       console.info("收到识别结果：", text);
       this.input = text;
+      this.input2 = text;
     },
     recordStop() {
+      this.input2 = "";
       console.info("录音结束");
     },
     recordNoResult() {
