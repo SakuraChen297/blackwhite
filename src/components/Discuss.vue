@@ -1,5 +1,8 @@
 <template>
   <div id="Main" @touchmove="preventTouch">
+    <!-- <meta name="full-screen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="x5-fullscreen" content="true" /> -->
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no, viewport-fit=cover"
@@ -85,7 +88,7 @@ export default {
 }
 
 #Main {
-  height: 100vh;
+  height: 100%;
   background: var(--themeColor, #f1c959);
   .back {
     font-weight: bold;

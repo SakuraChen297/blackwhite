@@ -79,7 +79,7 @@ export default {
   box-sizing: border-box;
 }
 #Main {
-  height: 100vh;
+  height: 100%;
   background: var(--themeColor, #f1c959);
   h1 {
     margin-left: 40.4%;

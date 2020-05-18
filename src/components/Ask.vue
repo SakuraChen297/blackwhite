@@ -6,7 +6,12 @@
     />
     <!-- <van-number-keyboard safe-area-inset-bottom /> -->
     <div class="back" @click="goback">Back</div>
-    <van-field class="addTitle" v-model="value" placeholder="What is your dilema?" type="textarea" />
+    <van-field
+      class="addTitle"
+      v-model="value"
+      placeholder="What is your dilema?"
+      type="textarea"
+    />
     <main class="content">
       <div class="inner">
         <div class="procon">
@@ -22,7 +27,12 @@
           <span>CONS</span>
         </div>
         <proconContent class="proconContent"></proconContent>
-        <van-button color="#f2ca4e" size="large" @click="showPopup" id="addResponse">
+        <van-button
+          color="#f2ca4e"
+          size="large"
+          @click="showPopup"
+          id="addResponse"
+        >
           <div>Add your response</div>
         </van-button>
       </div>
@@ -41,12 +51,12 @@ export default {
   data() {
     return {
       show: false,
-      value: ""
+      value: "",
     };
   },
   components: {
     popup,
-    proconContent
+    proconContent,
   },
   methods: {
     showPopup() {
@@ -55,8 +65,8 @@ export default {
 
     goback() {
       this.$router.replace("/Main");
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -77,7 +87,7 @@ export default {
 }
 
 #Main {
-  height: 100vh;
+  height: 100%;
   background: var(--themeColor, #f1c959);
   .back {
     font-weight: bold;

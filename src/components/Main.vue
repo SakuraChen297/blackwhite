@@ -16,10 +16,9 @@
           <div class="comment1" @click="gotolink">
             <img src="./images/face.jpg" id="face" />
             <div class="title">
-              Should I go fuck your mother bitch you son of a bitch motherfucker?
-              <span
-                class="responseNum"
-              >$ responses</span>
+              Should I go fuck your mother bitch you son of a bitch
+              motherfucker?
+              <span class="responseNum">$ responses</span>
             </div>
             <img src="./images/next.jpg" id="next" />
           </div>
@@ -34,7 +33,7 @@ export default {
   name: "Main",
   data() {
     return {
-      title: ""
+      title: "",
     };
   },
   methods: {
@@ -46,8 +45,8 @@ export default {
     },
     gotolink() {
       this.$router.replace("/Discuss");
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -67,7 +66,7 @@ export default {
   box-sizing: border-box;
 }
 #Main {
-  height: 100vh;
+  height: 100%;
   display: flex;
   background: var(--themeColor, #f1c959);
   h1 {

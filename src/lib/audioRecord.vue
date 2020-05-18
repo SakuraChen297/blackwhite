@@ -55,6 +55,7 @@ export default {
       }
     },
     start(e) {
+      e.preventDefault();
       if (this.recording || (e && e.which !== 1)) return;
       if (!this.isAudioAvailable) {
         const config = this.getConfig;
@@ -74,6 +75,7 @@ export default {
       this.$emit("record-start");
     },
     stop(e) {
+      e && e.preventDefault();
       if (e && e.which !== 1) return;
       this.recording = false;
       this.recorder.stop();
