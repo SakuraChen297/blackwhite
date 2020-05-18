@@ -1,4 +1,5 @@
 {
+  "homepage":"https://SakuraChen297.github.io/blackwhite",
   "name": "black-white-pages",
   "version": "0.1.0",
   "private": true,
@@ -6,6 +7,10 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
+  },
+  "script":{
+    "predeploy":"npm run build",
+    "deploy":"gh-pages -d build"
   },
   "dependencies": {
     "core-js": "^3.6.5",
@@ -27,6 +32,7 @@
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-vue": "^6.2.2",
+    "gh-pages": "^2.2.0",
     "prettier": "^1.19.1",
     "sass": "^1.26.3",
     "sass-loader": "^8.0.2",
