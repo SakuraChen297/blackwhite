@@ -1,3 +1,3 @@
 module.exports = {
-  baseUrl: "your-project-name",
+  baseUrl: "https://SakuraChen297.github.io/blackwhite",
 };
