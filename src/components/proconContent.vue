@@ -11,7 +11,7 @@
         <template #left>
           <van-button square type="danger" text="Delete" :style="{ height: '100%' }" />
         </template>
-        <van-cell value="I'm wondering why Mr.Fitz can grow up so handsome like this." />
+        <van-cell value="I'm wondering why Mr.Fitz can grow up  handsome like this." />
       </van-swipe-cell>
     </div>
     <div class="conContent">
@@ -43,11 +43,11 @@ export default {
 <style lang='scss' scoped>
 .Main {
   display: flex;
-
   .conContent {
     width: 50%;
     margin-right: 2vh;
     margin-left: 2vh;
+    overflow-y: scroll;
     height: 46vh;
     .adviceCon {
       margin-bottom: 5vh;
@@ -59,8 +59,8 @@ export default {
     width: 50%;
     margin-right: 2vh;
     margin-left: 2vh;
+    overflow-y: scroll;
     height: 46vh;
-
     .advicePro {
       margin-bottom: 5vh;
       border-radius: 10px 10px 10px 10px;

@@ -2,9 +2,7 @@
   <div class="Main">
     <div class="trustWrapper">
       <div class="span1">HELP ME DECIDE</div>
-      <div class="title">
-        Should I just go back home and learn more about JavaScript & HTML?
-      </div>
+      <div class="title">Should I just go back home and learn more about JavaScript & HTML?</div>
       <div id="decisionWrapper">
         <img src="./images/decision.jpg" />
         <h3>I'm undecided.</h3>
@@ -25,25 +23,21 @@
       <span>Strong Pro</span>
     </div>
     <div id="recordWrapper">
-      <audioRecord
-        id="recordButton"
-        @record="showResult"
-        @record-start="recordStart"
-        @record-stop="recordStop"
-        @record-blank="recordNoResult"
-        @record-failed="recordFailed"
-        @record-complete="recordComplete"
-      ></audioRecord>
-      <van-field
-        class="input"
-        v-model="input"
-        placeholder="Tell me why?"
-        type="textarea"
-      ></van-field>
+      <van-icon id="recordButton" name="stop-circle-o" size="2rem" @click="showOverlay" />
+      <van-field class="input" v-model="input" placeholder="Tell me why?" type="textarea"></van-field>
     </div>
     <van-button color="#f2ca4e" size="large" class="postResponse">
       <div>Post response</div>
     </van-button>
+    <audioRecord
+      v-if="overlay"
+      @record="showResult"
+      @record-start="recordStart"
+      @record-stop="recordStop"
+      @record-blank="recordNoResult"
+      @record-failed="recordFailed"
+      @record-complete="recordComplete"
+    />
   </div>
 </template>
 
@@ -54,25 +48,30 @@ export default {
   data() {
     return {
       input: "",
-      value: 50,
       input2: "",
+      overlay: false,
+      value: 50
     };
   },
   components: {
-    audioRecord,
+    audioRecord
   },
   methods: {
-    recordStart() {
-      console.info("录音开始");
+    showOverlay() {
+      this.overlay = true;
     },
     showResult(text) {
       console.info("收到识别结果：", text);
       this.input = text;
       this.input2 = text;
     },
+    recordStart() {
+      console.info("录音开始");
+    },
     recordStop() {
-      this.input2 = "";
       console.info("录音结束");
+      this.overlay = false;
+      this.input2 = "";
     },
     recordNoResult() {
       console.info("没有录到什么，请重试");
@@ -82,8 +81,8 @@ export default {
     },
     recordFailed(error) {
       console.info("识别失败，错误栈：", error);
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "93e5b6e2211f5970ab2a69fcc895c6a7",
+    "revision": "1cd49a8f2be6dfef9537b58520b7ffa7",
     "url": "/blackwhite/index.html"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/blackwhite/robots.txt"
   },
   {
-    "revision": "1ad0cc9b63f30ec895cb",
-    "url": "/blackwhite/static/css/app.83d2b335.css"
+    "revision": "5d7439d4f79b19282114",
+    "url": "/blackwhite/static/css/app.50a7972e.css"
   },
   {
     "revision": "a89eb1f5d7e6f5b6d184",
@@ -28,8 +28,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/blackwhite/static/js/about.18f0c76f.js"
   },
   {
-    "revision": "1ad0cc9b63f30ec895cb",
-    "url": "/blackwhite/static/js/app.6101dd82.js"
+    "revision": "5d7439d4f79b19282114",
+    "url": "/blackwhite/static/js/app.41202586.js"
   },
   {
     "revision": "a89eb1f5d7e6f5b6d184",

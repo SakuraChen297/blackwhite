@@ -1,26 +1,12 @@
 <template>
-  <div
-    class="audioRecord"
-    :class="{ active: recording, ready: isAudioAvailable }"
-  >
-    <div class="record-btn" @click="start">
-      <van-icon class="icon" name="stop-circle-o" size="2rem" />
-    </div>
-    <van-overlay :show="showup">
+  <div class="audioRecord" :classif="{ active: recording, ready: isAudioAvailable }">
+    <van-overlay :show="showup" @click="destroy">
       <div class="wrapper">
         <div class="block">
           <div>{{ this.$parent.input2 }}</div>
-          <van-button class="btn" type="default" size="normal" @click="stop">
-            <van-icon class="icon" name="stop-circle" size="4rem" />
-          </van-button>
         </div>
       </div>
     </van-overlay>
-    <van-overlay :show="showupstop" @click="showupstop = false">
-      <div class="wrapper" @click="showup = false">
-        <div class="blockend"><div>终止录音</div></div>
-      </div></van-overlay
-    >
   </div>
 </template>
 
@@ -31,7 +17,7 @@ import xfyunConfig from "./recorder/xfyun";
 
 const freezeProperty = (obj, key) => {
   Object.defineProperty(obj, key, {
-    configurable: false,
+    configurable: false
   });
 };
 const buffer = [];
@@ -47,13 +33,14 @@ export default {
       resultCache: {},
       result: "",
       responding: false,
-      showup: false,
-      showupstop: false,
+      showup: false
     };
   },
   methods: {
-    start(e) {
-      if (this.recording || (e && e.which !== 1)) return;
+    destroy() {
+      this.$destroy();
+    },
+    start() {
       if (!this.isAudioAvailable) {
         const config = this.getConfig;
         if (!config("appId") || !config("apiKey") || !config("apiSecret")) {
@@ -63,44 +50,11 @@ export default {
         alert(this.locale.not_supported);
         return;
       }
+      this.showup = true;
       this.reset();
       this.recording = true;
       this.recorder.start();
-      this.showup = true;
       this.$emit("record-start");
-    },
-    stop(e) {
-      if (e && e.which !== 1) return;
-      this.recording = false;
-      this.recorder.stop();
-      this.$emit("record-stop");
-      this.showup = false;
-      this.showupstop = true;
-      this.processing = true;
-    },
-    reset() {
-      buffer.splice(0);
-      this.resultCache = {};
-      this.responding = false;
-      setTimeout(() => {
-        this.result = "";
-      }, 500);
-    },
-    appendResult(text, sn) {
-      this.resultCache[sn] = { text };
-    },
-    replaceResult(text, sn, start, end) {
-      this.appendResult(text, sn);
-      const resultCache = this.resultCache;
-      for (let i = start; i <= end; i++) {
-        resultCache[i].discarded = true;
-      }
-    },
-    getResult() {
-      return Object.values(this.resultCache)
-        .filter((item) => !item.discarded)
-        .map((item) => item.text)
-        .join("");
     },
     setResult(data) {
       this.responding = true;
@@ -145,11 +99,44 @@ export default {
         }, 1000);
       }
     },
+    stop() {
+      this.recording = false;
+      this.recorder.stop();
+      this.$emit("record-stop");
+      this.processing = true;
+    },
+    reset() {
+      buffer.splice(0);
+      this.resultCache = {};
+      this.responding = false;
+      setTimeout(() => {
+        this.result = "";
+      }, 500);
+    },
+    appendResult(text, sn) {
+      this.resultCache[sn] = { text };
+    },
+    replaceResult(text, sn, start, end) {
+      this.appendResult(text, sn);
+      const resultCache = this.resultCache;
+      for (let i = start; i <= end; i++) {
+        resultCache[i].discarded = true;
+      }
+    },
+    getResult() {
+      return Object.values(this.resultCache)
+        .filter(item => !item.discarded)
+        .map(item => item.text)
+        .join("");
+    }
+  },
+  mounted: function() {
+    this.start();
   },
   computed: {
     state() {
       return this.recorder ? this.recorder.state : "end";
-    },
+    }
   },
   created() {
     const config = this.getConfig;
@@ -165,7 +152,7 @@ export default {
         this.$emit("record-failed", error);
         alert(this.locale.socket_error);
       },
-      onMessage: (e) => {
+      onMessage: e => {
         const jsonData = JSON.parse(e.data);
         if (jsonData.data && jsonData.data.result) {
           this.setResult(jsonData.data.result);
@@ -181,7 +168,7 @@ export default {
       rlang: config("rlang"),
       ptt: config("ptt"),
       nunum: config("nunum"),
-      vad_eos: config("vad_eos"),
+      vad_eos: config("vad_eos")
     });
     const freezKeys = [
       "appId",
@@ -194,9 +181,9 @@ export default {
       "ptt",
       "nunum",
       "vad_eos",
-      "config",
+      "config"
     ];
-    freezKeys.forEach((key) => {
+    freezKeys.forEach(key => {
       freezeProperty(recorder, key);
     });
     this.recorder = recorder;
@@ -207,9 +194,9 @@ export default {
       config("apiSecret");
   },
   beforeDestroy() {
-    this.recorder.stop();
+    this.stop();
     this.recorder = null;
-  },
+  }
 };
 </script>
 
@@ -228,30 +215,7 @@ export default {
       line-height: 30px;
       color: white;
       font-size: 1.2em;
-      margin-top: 8vh;
-    }
-    .btn {
-      border: none;
-      background: white;
-      position: absolute;
-      bottom: 7vh;
-      width: 4rem;
-      height: 4rem;
-      left: 50%;
-      margin-left: -2rem;
-      border-radius: 50%;
-    }
-  }
-  .blockend {
-    text-align: center;
-    width: 40vh;
-    height: 20vh;
-    background: #f1c959;
-    border-radius: 20px 20px 20px 20px;
-    div {
-      font-size: 1.2em;
-      margin-top: 8vh;
-      font-weight: bold;
+      margin-top: 15vh;
     }
   }
 }
