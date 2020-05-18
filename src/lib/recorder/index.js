@@ -11,6 +11,7 @@ const recorderWorker = createWorker(recordWorker);
 const buffer = [];
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 navigator.getUserMedia =
+  navigator.mediaDevices.getUserMedia ||
   navigator.getUserMedia ||
   navigator.webkitGetUserMedia ||
   navigator.mozGetUserMedia ||
