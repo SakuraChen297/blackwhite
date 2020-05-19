@@ -110,8 +110,9 @@ export default {
         }
       }
       .comments {
-        height: 60vh;
+        height: 50vh;
         margin-top: 3vh;
+        overflow: scroll;
         .comment1 {
           height: 9vh;
           border-radius: 10px 10px 10px 10px;
@@ -143,6 +144,9 @@ export default {
             }
           }
         }
+      }
+      .comments::-webkit-scrollbar {
+        display: none;
       }
       .comment1:before {
         content: "";
