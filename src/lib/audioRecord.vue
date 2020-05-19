@@ -220,16 +220,23 @@ export default {
     width: 100%;
     height: 100%;
     background: transparent;
+    align-items: center;
+    justify-content: center;
+    display: flex;
     div {
       line-height: 30px;
       color: white;
       font-size: 1.2em;
-      margin-top: 15vh;
+      height: 60%;
+      overflow: scroll;
+    }
+    div::-webkit-scrollbar {
+      display: none;
     }
     .icon {
       position: absolute;
-      bottom: 13vh;
-      transform: translateX(7.5vw);
+      bottom: 0;
+      transform: translateY(20vh);
     }
   }
 }
