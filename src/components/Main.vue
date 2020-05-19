@@ -16,9 +16,10 @@
           <div class="comment1" @click="gotolink">
             <img src="./images/face.jpg" id="face" />
             <div class="title">
-              Should I go fuck your mother bitch you son of a bitch
-              motherfucker?
-              <span class="responseNum">$ responses</span>
+              Should I just go back home and learn more about JavaScript & HTML?
+              <span
+                class="responseNum"
+              >$ responses</span>
             </div>
             <img src="./images/next.jpg" id="next" />
           </div>
@@ -33,7 +34,7 @@ export default {
   name: "Main",
   data() {
     return {
-      title: "",
+      title: ""
     };
   },
   methods: {
@@ -45,8 +46,8 @@ export default {
     },
     gotolink() {
       this.$router.replace("/Discuss");
-    },
-  },
+    }
+  }
 };
 </script>
 
