@@ -4,6 +4,7 @@
       <div class="wrapper">
         <div class="block">
           <div>{{ this.$parent.input2 }}</div>
+          <recordingicon class="icon"></recordingicon>
         </div>
       </div>
     </van-overlay>
@@ -12,6 +13,7 @@
 
 <script>
 /*eslint-disable*/
+import recordingicon from "../components/recordingicon";
 import Recorder from "./recorder";
 import xfyunConfig from "./recorder/xfyun";
 
@@ -24,6 +26,9 @@ const buffer = [];
 export default {
   name: "audioRecord",
   mixins: [xfyunConfig],
+  components: {
+    recordingicon
+  },
   data() {
     return {
       processing: false,
@@ -101,7 +106,9 @@ export default {
     },
     stop() {
       this.recording = false;
-      this.recorder.stop();
+      if (this !== null) {
+        this.recorder.stop();
+      }
       this.$emit("record-stop");
       this.processing = true;
     },
@@ -142,7 +149,9 @@ export default {
     const config = this.getConfig;
     const recorder = new Recorder({
       onClose: () => {
-        this.stop();
+        if (this !== null) {
+          this.recorder.stop();
+        }
         this.processing = false;
       },
       onError: () => {
@@ -216,6 +225,11 @@ export default {
       color: white;
       font-size: 1.2em;
       margin-top: 15vh;
+    }
+    .icon {
+      position: absolute;
+      bottom: 13vh;
+      transform: translateX(7.5vw);
     }
   }
 }

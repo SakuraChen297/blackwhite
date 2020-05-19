@@ -48,24 +48,30 @@ export default {
     margin-right: 2vh;
     margin-left: 2vh;
     overflow-y: scroll;
-    height: 46vh;
+    max-height: 46vh;
     .adviceCon {
       margin-bottom: 5vh;
       border-radius: 10px 10px 10px 10px;
       box-shadow: 2px 2px 2px #ececec;
     }
   }
+  .conContent::-webkit-scrollbar {
+    display: none;
+  }
   .proContent {
     width: 50%;
     margin-right: 2vh;
     margin-left: 2vh;
     overflow-y: scroll;
-    height: 46vh;
+    max-height: 46vh;
     .advicePro {
       margin-bottom: 5vh;
       border-radius: 10px 10px 10px 10px;
       box-shadow: 2px 2px 2px #ececec;
     }
+  }
+  .proContent::-webkit-scrollbar {
+    display: none;
   }
 }
 </style>

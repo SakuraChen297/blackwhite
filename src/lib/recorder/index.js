@@ -192,12 +192,17 @@ class IatRecorder {
       this.wsOnMessage(e);
     };
     this.ws.onerror = (e) => {
-      this.stop();
+      if (this !== null) {
+        this.recorder.stop();
+      }
       this.config.onError && this.config.onError(e);
     };
     this.ws.onclose = (e) => {
-      this.stop();
-      this.config.onClose && this.config.onClose(e);
+      console.log("ws通道已关闭");
+      // if (this !== null) {
+      //   this.recorder.stop();
+      // }
+      // this.config.onClose && this.config.onClose(e);
     };
   }
 
