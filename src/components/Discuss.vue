@@ -2,7 +2,7 @@
   <div id="Main" @touchmove="preventTouch">
     <!-- <meta name="full-screen" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="x5-fullscreen" content="true" /> -->
+    <meta name="x5-fullscreen" content="true" />-->
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no, viewport-fit=cover"
@@ -16,21 +16,13 @@
           <span>Pros</span>
           <span>Cons</span>
         </div>
-        <div class="bar">
-          <div class="proBar"></div>
-          <div class="conBar"></div>
-        </div>
+        <proconBar></proconBar>
         <div class="procon2">
           <span>PROS</span>
           <span>CONS</span>
         </div>
         <proconContent class="proconContent"></proconContent>
-        <van-button
-          color="#f2ca4e"
-          size="large"
-          @click="showPopup"
-          id="addResponse"
-        >
+        <van-button color="#2c2e38" size="large" @click="showPopup" id="addResponse">
           <div>Add your response</div>
         </van-button>
       </div>
@@ -42,6 +34,7 @@
 </template>
 
 <script>
+import proconBar from "./proconBar";
 import proconContent from "./proconContent";
 import popup from "./Popup";
 export default {
@@ -49,12 +42,13 @@ export default {
   data() {
     return {
       show: false,
-      title: "Should I give this app a review on the App Store?",
+      title: "Should I give this app a review on the App Store?"
     };
   },
   components: {
+    proconBar,
     popup,
-    proconContent,
+    proconContent
   },
   methods: {
     preventTouch(e) {
@@ -66,17 +60,15 @@ export default {
 
     goback() {
       this.$router.replace("/Main");
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-:root {
-  --themeColor: #f1c959;
-  --contentColor: #f0b74b;
-  --commentsColor: #f1dd53;
-}
+$themeColor: #ffffff;
+$contentColor: #2c2e38;
+$commentsColor: #2c2e38;
 * {
   box-sizing: border-box;
   margin: 0;
@@ -89,7 +81,7 @@ export default {
 
 #Main {
   height: 100%;
-  background: var(--themeColor, #f1c959);
+  background: $themeColor;
   .back {
     font-weight: bold;
     font-size: 0.8em;
@@ -106,7 +98,7 @@ export default {
   .content {
     position: absolute;
     bottom: 0;
-    background: var(--contentColor, #f0b74b);
+    background: $contentColor;
     border-radius: 45px 15px 0 0;
     .inner {
       margin-top: 1.5vh;
@@ -119,22 +111,6 @@ export default {
         justify-content: space-between;
         font-weight: bold;
         font-size: 0.8em;
-      }
-      .bar {
-        display: flex;
-        justify-content: space-between;
-        .proBar {
-          width: 50%;
-          height: 6vh;
-          background: #f4d850;
-          border-radius: 0 50px 50px 0;
-        }
-        .conBar {
-          width: 50%;
-          height: 6vh;
-          background: #ed9c48;
-          border-radius: 50px 0 0 50px;
-        }
       }
       .procon2 {
         display: flex;
@@ -151,7 +127,7 @@ export default {
         border-radius: 8px 8px 8px 8px;
         height: 6vh;
         div {
-          color: black;
+          color: #ffffff;
           font-weight: bold;
           font-size: 0.8em;
         }

@@ -6,33 +6,20 @@
     />
     <!-- <van-number-keyboard safe-area-inset-bottom /> -->
     <div class="back" @click="goback">Back</div>
-    <van-field
-      class="addTitle"
-      v-model="value"
-      placeholder="What is your dilema?"
-      type="textarea"
-    />
+    <van-field class="addTitle" v-model="value" placeholder="What is your dilema?" type="textarea" />
     <main class="content">
       <div class="inner">
         <div class="procon">
           <span>Pros</span>
           <span>Cons</span>
         </div>
-        <div class="bar">
-          <div class="proBar"></div>
-          <div class="conBar"></div>
-        </div>
+        <proconBar></proconBar>
         <div class="procon2">
           <span>PROS</span>
           <span>CONS</span>
         </div>
         <proconContent class="proconContent"></proconContent>
-        <van-button
-          color="#f2ca4e"
-          size="large"
-          @click="showPopup"
-          id="addResponse"
-        >
+        <van-button color="#2c2e38" size="large" @click="showPopup" id="addResponse">
           <div>Add your response</div>
         </van-button>
       </div>
@@ -44,6 +31,7 @@
 </template>
 
 <script>
+import proconBar from "./proconBar";
 import proconContent from "./proconContent";
 import popup from "./Popup";
 export default {
@@ -51,12 +39,13 @@ export default {
   data() {
     return {
       show: false,
-      value: "",
+      value: ""
     };
   },
   components: {
     popup,
     proconContent,
+    proconBar
   },
   methods: {
     showPopup() {
@@ -65,17 +54,15 @@ export default {
 
     goback() {
       this.$router.replace("/Main");
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-:root {
-  --themeColor: #f1c959;
-  --contentColor: #f0b74b;
-  --commentsColor: #f1dd53;
-}
+$themeColor: #ffffff;
+$contentColor: #2c2e38;
+$commentsColor: #f1dd53;
 * {
   box-sizing: border-box;
   margin: 0;
@@ -88,7 +75,7 @@ export default {
 
 #Main {
   height: 100%;
-  background: var(--themeColor, #f1c959);
+  background: $themeColor;
   .back {
     font-weight: bold;
     font-size: 0.8em;
@@ -97,7 +84,7 @@ export default {
     width: 5vh;
   }
   .addTitle {
-    background: var(--themeColor, #f1c959);
+    background: $themeColor;
     padding-left: 5vh;
     font-weight: bold;
     font-size: 1.5em;
@@ -106,7 +93,7 @@ export default {
   .content {
     position: absolute;
     bottom: 0;
-    background: var(--contentColor, #f0b74b);
+    background: $contentColor;
     border-radius: 45px 15px 0 0;
     .inner {
       margin-top: 1.5vh;
@@ -151,7 +138,7 @@ export default {
         border-radius: 8px 8px 8px 8px;
         height: 6vh;
         div {
-          color: black;
+          color: #ffffff;
           font-weight: bold;
           font-size: 0.8em;
         }

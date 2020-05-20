@@ -5,24 +5,15 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no, viewport-fit=cover"
     />
     <h1>My Decisions</h1>
-    <img src="./images/pen.jpg" id="pen" />
+    <!-- <img src="./images/logo2.jpg" id="logo" /> -->
     <main class="content">
       <div class="inner">
         <div class="addNew" @click="gotolink1">
-          <img src="./images/add.jpg" id="add" />
+          <van-icon name="add" id="add" size="35" />
           <span class="ask">Ask New Question</span>
         </div>
         <div class="comments">
-          <div class="comment1" @click="gotolink">
-            <img src="./images/face.jpg" id="face" />
-            <div class="title">
-              Should I just go back home and learn more about JavaScript & HTML?
-              <span
-                class="responseNum"
-              >$ responses</span>
-            </div>
-            <img src="./images/next.jpg" id="next" />
-          </div>
+          <comment></comment>
         </div>
       </div>
     </main>
@@ -30,6 +21,7 @@
 </template>
 
 <script>
+import comment from "./comment";
 export default {
   name: "Main",
   data() {
@@ -37,26 +29,24 @@ export default {
       title: ""
     };
   },
+  components: {
+    comment
+  },
   methods: {
     preventTouch(e) {
       e.preventDefault();
     },
     gotolink1() {
       this.$router.replace("/Ask");
-    },
-    gotolink() {
-      this.$router.replace("/Discuss");
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-:root {
-  --themeColor: #f1c959;
-  --contentColor: #f0b74b;
-  --commentsColor: #f1dd53;
-}
+$themeColor: #ffffff;
+$contentColor: #2c2e38;
+$commentsColor: #2c2e38;
 * {
   box-sizing: border-box;
   margin: 0;
@@ -69,7 +59,7 @@ export default {
 #Main {
   height: 100%;
   display: flex;
-  background: var(--themeColor, #f1c959);
+  background: $themeColor;
   h1 {
     white-space: nowrap;
     margin-top: 16%;
@@ -77,15 +67,15 @@ export default {
     height: 6vh;
     width: auto;
   }
-  #pen {
-    margin-left: 15vw;
-    margin-top: 9.5%;
-    height: 12vh;
-  }
+  // #logo {
+  //   margin-left: 15vw;
+  //   margin-top: 0;
+  //   height: 12vh;
+  // }
   .content {
     position: absolute;
     bottom: 0;
-    background: var(--contentColor, #f0b74b);
+    background: $contentColor;
     border-radius: 45px 15px 0 0;
     .inner {
       margin-top: 1.5vh;
@@ -97,62 +87,26 @@ export default {
         display: flex;
         border-radius: 10px 10px 10px 10px;
         background: #f8f8f8;
-        border: 2px dashed var(--themeColor, #f1c959);
+        border: 2px dashed $contentColor;
         #add {
-          margin: 1vh;
+          margin: 2vh;
+          margin-top: 1.6vh;
           margin-left: 2vh;
-          height: 6vh;
         }
         .ask {
           font-weight: bold;
           font-size: 0.9em;
           margin: 5vw;
+          margin-left: 3.6vw;
         }
       }
       .comments {
         height: 50vh;
         margin-top: 3vh;
         overflow: scroll;
-        .comment1 {
-          height: 9vh;
-          border-radius: 10px 10px 10px 10px;
-          background: #ffffff;
-          box-shadow: 2px 2px 2px #ececec;
-          display: flex;
-          #face {
-            height: 8vh;
-            margin-left: 1vh;
-          }
-          #next {
-            height: 8vh;
-            margin-right: 1vw;
-          }
-          .title {
-            padding-top: 1.5vh;
-            width: auto;
-            font-size: 0.8em;
-            margin-left: 3vw;
-            .responseNum {
-              display: block;
-              padding: 0.3vh;
-              height: auto;
-              width: 50vw;
-              font-size: 0.8em;
-              text-align: left;
-              color: #a0a0a0;
-              white-space: nowrap;
-            }
-          }
-        }
       }
       .comments::-webkit-scrollbar {
         display: none;
-      }
-      .comment1:before {
-        content: "";
-        width: 5vw;
-        border-radius: 10px 0 0 10px;
-        background: var(--commentsColor, #f1dd53);
       }
     }
   }

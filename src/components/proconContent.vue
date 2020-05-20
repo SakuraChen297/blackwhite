@@ -18,7 +18,13 @@
       <van-swipe-cell class="adviceCon">
         <van-cell value="Nuh,get off." />
         <template #right>
-          <van-button square type="danger" text="Delete" :style="{ height: '100%' }" />
+          <van-button
+            square
+            type="danger"
+            @click="getoff"
+            text="Delete"
+            :style="{ height: '100%' }"
+          />
         </template>
       </van-swipe-cell>
       <van-swipe-cell class="adviceCon">
@@ -35,7 +41,14 @@
 export default {
   name: "proconContent",
   data() {
-    return {};
+    return {
+      del1: true
+    };
+  },
+  methods: {
+    getoff() {
+      this.del1 = false;
+    }
   }
 };
 </script>

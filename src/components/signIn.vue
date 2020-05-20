@@ -8,6 +8,7 @@
     <div class="inner">
       <van-form class="form" @submit="onSubmit">
         <van-field
+          :style="{background:'#f8f8f8'}"
           v-model="username"
           name="用户名/手机"
           label="用户名/手机"
@@ -15,6 +16,7 @@
           :rules="[{ required: true, message: '请填写用户名/手机' }]"
         />
         <van-field
+          :style="{background:'#f8f8f8'}"
           v-model="password"
           type="password"
           name="密码"
@@ -29,9 +31,9 @@
             block
             typeC="info"
             native-type="submit"
-            color="#f1c959"
+            color="#2c2e38"
           >
-            <div :style="{ font: 'black' }">登录</div>
+            <div :style="{ font: 'black' ,fontWeight:'bold'}">登录</div>
           </van-button>
         </div>
       </van-form>
@@ -46,7 +48,7 @@ export default {
     return {
       username: "",
       password: "",
-      mail: "",
+      mail: ""
     };
   },
   methods: {
@@ -58,17 +60,15 @@ export default {
     },
     onSubmit(values) {
       console.log("submit", values);
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-:root {
-  --themeColor: #f1c959;
-  --contentColor: #f0b74b;
-  --commentsColor: #f1dd53;
-}
+$themeColor: #ffffff;
+$contentColor: #2c2e38;
+$commentsColor: #2c2e38;
 * {
   box-sizing: border-box;
   margin: 0;
@@ -80,7 +80,7 @@ export default {
 }
 #Main {
   height: 100%;
-  background: var(--themeColor, #f1c959);
+  background: $themeColor;
   h1 {
     margin-left: 40.4%;
     margin-top: 10%;
@@ -88,7 +88,7 @@ export default {
     width: 2em;
   }
   .inner {
-    height: 60vh;
+    height: 70vh;
     margin-top: 10vh;
     background: #f8f8f8;
   }

@@ -4,7 +4,7 @@
       <div class="span1">HELP ME DECIDE</div>
       <div class="title">Should I just go back home and learn more about JavaScript & HTML?</div>
       <div id="decisionWrapper">
-        <img src="./images/decision.jpg" />
+        <!-- <img src="./images/decision.jpg" /> -->
         <h3>I'm undecided.</h3>
       </div>
     </div>
@@ -12,9 +12,10 @@
       class="slider"
       v-model="value"
       :step="25"
-      active-color="#f4d850"
-      inactive-color="#ed9c48"
+      active-color="#2c2e38"
+      inactive-color="#ffffff"
       bar-height="14px"
+      :style="{border:'1px solid #2c2e38'}"
     />
     <div id="compareWrapper">
       <span>Strong Con</span>
@@ -26,7 +27,7 @@
       <van-icon id="recordButton" name="stop-circle-o" size="2rem" @click="showOverlay" />
       <van-field class="input" v-model="input" placeholder="Tell me why?" type="textarea"></van-field>
     </div>
-    <van-button color="#f2ca4e" size="large" class="postResponse">
+    <van-button color="#2c2e38" size="large" class="postResponse">
       <div>Post response</div>
     </van-button>
     <audioRecord
@@ -87,6 +88,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$themeColor: #ffffff;
+$contentColor: #2c2e38;
+$commentsColor: #2c2e38;
 .Main {
   padding: 4vh;
   .trustWrapper {
@@ -105,14 +109,15 @@ export default {
     }
     #decisionWrapper {
       display: flex;
-      img {
-        transform: translateX(-1.5vw);
-        height: 8vh;
-      }
-      h3 {
-        transform: translateY(-0.5vh);
-        padding-left: 2vh;
-      }
+      justify-content: center;
+      // img {
+      //   transform: translateX(-1.5vw);
+      //   height: 8vh;
+      // }
+      // h3 {
+      //   transform: translateY(-0.5vh);
+      //   padding-left: 2vh;
+      // }
     }
   }
   .slider {
@@ -153,7 +158,7 @@ export default {
     border-radius: 8px 8px 8px 8px;
     height: 6.5vh;
     div {
-      color: black;
+      color: #ffffff;
     }
   }
 }

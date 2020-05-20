@@ -8,6 +8,7 @@
     <div class="inner">
       <van-form class="form" @submit="onSubmit">
         <van-field
+          :style="{background:'#f8f8f8'}"
           v-model="username"
           name="用户名"
           label="用户名"
@@ -15,6 +16,7 @@
           :rules="[{ required: true, message: '请填写用户名' }]"
         />
         <van-field
+          :style="{background:'#f8f8f8'}"
           v-model="password"
           type="password"
           name="密码"
@@ -23,6 +25,7 @@
           :rules="[{ required: true, message: '请填写密码' }]"
         />
         <van-field
+          :style="{background:'#f8f8f8'}"
           v-model="passwordRe"
           type="password"
           name="密码"
@@ -31,6 +34,7 @@
           :rules="[{ required: true, message: '请再输入一次密码' }]"
         />
         <van-field
+          :style="{background:'#f8f8f8'}"
           v-model="mailortel"
           name="邮箱/手机"
           label="邮箱/手机"
@@ -38,6 +42,7 @@
           :rules="[{ required: true, message: '请填写邮箱或手机号码' }]"
         />
         <van-field
+          :style="{background:'#f8f8f8'}"
           v-model="sms"
           center
           clearable
@@ -47,9 +52,10 @@
         >
           <template #button>
             <van-button
+              round
               size="small"
               type="primary"
-              color="#f1c959"
+              color="#2c2e38"
               :disabled="show"
               @click="countDown"
               native-type="button"
@@ -66,7 +72,7 @@
           block
           type="info"
           native-type="submit"
-          color="#f1c959"
+          color="#2c2e38"
         >
           <div>注册</div>
         </van-button>
@@ -87,7 +93,7 @@ export default {
       sms: "",
       show: false,
       count: "",
-      timer: null,
+      timer: null
     };
   },
   methods: {
@@ -122,17 +128,15 @@ export default {
     },
     onSubmit(values) {
       console.log("submit", values);
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-:root {
-  --themeColor: #f1c959;
-  --contentColor: #f0b74b;
-  --commentsColor: #f1dd53;
-}
+$themeColor: #ffffff;
+$contentColor: #2c2e38;
+$commentsColor: #2c2e38;
 * {
   box-sizing: border-box;
   margin: 0;
@@ -143,7 +147,7 @@ export default {
   box-sizing: border-box;
 }
 #Main {
-  background: var(--themeColor, #f1c959);
+  background: $themeColor;
   h1 {
     margin-left: 40.4%;
     margin-top: 10%;
@@ -151,6 +155,7 @@ export default {
     width: 2em;
   }
   .inner {
+    height: 70vh;
     margin-top: 10vh;
     background: #f8f8f8;
   }
