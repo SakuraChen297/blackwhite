@@ -1,5 +1,5 @@
 <template>
-  <div id="Main" @touchmove="preventTouch">
+  <div id="Main">
     <!-- <meta name="full-screen" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="x5-fullscreen" content="true" />-->
@@ -53,9 +53,9 @@ export default {
     Main
   },
   methods: {
-    preventTouch(e) {
-      e.preventDefault();
-    },
+    // preventTouch(e) {
+    //   e.preventDefault();
+    // }, @touchmove="preventTouch"
     showPopup() {
       this.show = true;
     },

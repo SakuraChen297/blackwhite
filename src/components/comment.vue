@@ -55,7 +55,7 @@ $commentsColor: #2c2e38;
     margin-left: 7vw;
     .responseNum {
       display: block;
-      padding: 0.3vh;
+      padding: 0;
       height: auto;
       width: 50vw;
       font-size: 0.8em;

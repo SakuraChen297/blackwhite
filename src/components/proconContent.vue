@@ -50,8 +50,7 @@ export default {
     margin-right: 2vh;
     margin-left: 2vh;
     overflow-y: scroll;
-    max-height: 46vh;
-    height: 46vh;
+    height: 40vh;
   }
   .conContent::-webkit-scrollbar {
     display: none;
@@ -61,7 +60,7 @@ export default {
     margin-right: 2vh;
     margin-left: 2vh;
     overflow-y: scroll;
-    max-height: 46vh;
+    height: 40vh;
   }
   .proContent::-webkit-scrollbar {
     display: none;
