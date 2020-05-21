@@ -27,7 +27,7 @@
       <van-icon id="recordButton" name="stop-circle-o" size="2rem" @click="showOverlay" />
       <van-field class="input" v-model="input" placeholder="Tell me why?" type="textarea"></van-field>
     </div>
-    <van-button color="#2c2e38" size="large" class="postResponse">
+    <van-button @click="postup" color="#2c2e38" size="large" class="postResponse">
       <div>Post response</div>
     </van-button>
     <audioRecord
@@ -51,13 +51,22 @@ export default {
       input: "",
       input2: "",
       overlay: false,
-      value: 50
+      value: 50,
+      cache: {}
     };
   },
   components: {
     audioRecord
   },
   methods: {
+    postup() {
+      if (this.value !== 50 && this.input !== "") {
+        console.log(this.value);
+        this.cache = { value: this.value, input: this.input };
+        console.log(this.cache);
+        this.$emit("getcache", this.cache);
+      }
+    },
     showOverlay() {
       this.overlay = true;
     },

@@ -1,54 +1,43 @@
 <template>
   <div class="Main">
     <div class="proContent">
-      <van-swipe-cell class="advicePro">
-        <template #left>
-          <van-button square type="danger" text="Delete" :style="{ height: '100%' }" />
-        </template>
-        <van-cell value="Go and get the best score for the app!" />
-      </van-swipe-cell>
-      <van-swipe-cell class="advicePro">
-        <template #left>
-          <van-button square type="danger" text="Delete" :style="{ height: '100%' }" />
-        </template>
-        <van-cell value="I'm wondering why Mr.Fitz can grow up  handsome like this." />
-      </van-swipe-cell>
+      <adviceleft v-for="(item,index) in prodata" :key="index" :inputPro="item.input" />
     </div>
     <div class="conContent">
-      <van-swipe-cell class="adviceCon">
-        <van-cell value="Nuh,get off." />
-        <template #right>
-          <van-button
-            square
-            type="danger"
-            @click="getoff"
-            text="Delete"
-            :style="{ height: '100%' }"
-          />
-        </template>
-      </van-swipe-cell>
-      <van-swipe-cell class="adviceCon">
-        <van-cell value="Nope." />
-        <template #right>
-          <van-button square type="danger" text="Delete" :style="{ height: '100%' }" />
-        </template>
-      </van-swipe-cell>
+      <adviceright v-for="(item,index) in condata" :key="index" :inputCon="item.input" />
     </div>
   </div>
 </template>
 
 <script>
+import adviceleft from "./adviceleft";
+import adviceright from "./adviceright";
 export default {
   name: "proconContent",
+  components: {
+    adviceleft,
+    adviceright
+  },
   data() {
     return {
-      del1: true
+      prodata: [
+        { value: 75, input: "Get the best score!" },
+        {
+          value: 100,
+          input: "I'm wondering why Mr.Fitz can grow up  handsome like this."
+        },
+        {
+          value: 100,
+          input: "I can't find any app that is better than this one."
+        },
+        { value: 75, input: "No one can build the page such good." }
+      ],
+      condata: [
+        { value: 25, input: "Nuh,get off." },
+        { value: 0, input: "Nope." },
+        { value: 0, input: "Who got the idea to build this app?It sucks." }
+      ]
     };
-  },
-  methods: {
-    getoff() {
-      this.del1 = false;
-    }
   }
 };
 </script>
@@ -62,11 +51,7 @@ export default {
     margin-left: 2vh;
     overflow-y: scroll;
     max-height: 46vh;
-    .adviceCon {
-      margin-bottom: 5vh;
-      border-radius: 10px 10px 10px 10px;
-      box-shadow: 2px 2px 2px #ececec;
-    }
+    height: 46vh;
   }
   .conContent::-webkit-scrollbar {
     display: none;
@@ -77,11 +62,6 @@ export default {
     margin-left: 2vh;
     overflow-y: scroll;
     max-height: 46vh;
-    .advicePro {
-      margin-bottom: 5vh;
-      border-radius: 10px 10px 10px 10px;
-      box-shadow: 2px 2px 2px #ececec;
-    }
   }
   .proContent::-webkit-scrollbar {
     display: none;

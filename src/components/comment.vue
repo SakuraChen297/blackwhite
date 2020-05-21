@@ -2,12 +2,12 @@
   <div class="comment1" @click="gotolink">
     <!-- <img src="./images/face.jpg" id="face" /> -->
     <div class="title">
-      Should I just go back home and learn more about JavaScript & HTML?
-      <span
-        class="responseNum"
-      >$ responses</span>
+      {{title}}
+      <span class="responseNum">{{response}} responses</span>
     </div>
-    <van-icon name="arrow" id="next" size="25" />
+    <div class="iconWrapper">
+      <van-icon name="arrow" id="next" size="25" />
+    </div>
   </div>
 </template>
 
@@ -15,8 +15,12 @@
 export default {
   name: "comment",
   data() {
-    return {};
+    return {
+      title: this.titlein,
+      response: this.responsein
+    };
   },
+  props: ["titlein", "responsein"],
   methods: {
     gotolink() {
       this.$router.replace("/Discuss");
@@ -30,10 +34,11 @@ $themeColor: #ffffff;
 $contentColor: #2c2e38;
 $commentsColor: #2c2e38;
 .comment1 {
-  height: auto;
+  height: 8vh;
   border-radius: 10px 10px 10px 10px;
   background: #ffffff;
   box-shadow: 2px 2px 2px #ececec;
+  margin-bottom: 3vh;
   display: flex;
   // #face {
   //   height: 8vh;
@@ -41,11 +46,11 @@ $commentsColor: #2c2e38;
   // }
   #next {
     margin-top: 2vh;
-    margin-right: 1vh;
+    margin-left: 8vw;
   }
   .title {
     padding-top: 1.5vh;
-    width: auto;
+    width: 60vw;
     font-size: 0.8em;
     margin-left: 7vw;
     .responseNum {
@@ -54,7 +59,6 @@ $commentsColor: #2c2e38;
       height: auto;
       width: 50vw;
       font-size: 0.8em;
-      text-align: left;
       color: #a0a0a0;
       white-space: nowrap;
     }
@@ -62,7 +66,7 @@ $commentsColor: #2c2e38;
 }
 .comment1:before {
   content: "";
-  width: 5vw;
+  width: 3vw;
   border-radius: 10px 0 0 10px;
   background: $commentsColor;
 }

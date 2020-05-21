@@ -21,14 +21,14 @@
           <span>PROS</span>
           <span>CONS</span>
         </div>
-        <proconContent class="proconContent"></proconContent>
+        <proconContent ref="proconContent" class="proconContent"></proconContent>
         <van-button color="#2c2e38" size="large" @click="showPopup" id="addResponse">
           <div>Add your response</div>
         </van-button>
       </div>
     </main>
     <van-popup class="popper" v-model="show" position="bottom" round>
-      <popup></popup>
+      <popup ref="popup" @getcache="cacheGet"></popup>
     </van-popup>
   </div>
 </template>
@@ -37,6 +37,7 @@
 import proconBar from "./proconBar";
 import proconContent from "./proconContent";
 import popup from "./Popup";
+import Main from "./Main";
 export default {
   name: "Discuss",
   data() {
@@ -48,7 +49,8 @@ export default {
   components: {
     proconBar,
     popup,
-    proconContent
+    proconContent,
+    Main
   },
   methods: {
     preventTouch(e) {
@@ -60,6 +62,17 @@ export default {
 
     goback() {
       this.$router.replace("/Main");
+    },
+    cacheGet(data) {
+      console.log(data);
+      if (data.value > 50) {
+        this.$refs.proconContent.prodata.push(data);
+      } else {
+        this.$refs.proconContent.condata.push(data);
+      }
+      this.show = false;
+      this.$refs.popup.input = "";
+      this.$refs.popup.value = 50;
     }
   }
 };

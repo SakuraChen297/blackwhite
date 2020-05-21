@@ -13,7 +13,12 @@
           <span class="ask">Ask New Question</span>
         </div>
         <div class="comments">
-          <comment></comment>
+          <comment
+            v-for="item in commentdata"
+            :key="item.id"
+            :titlein="item.title"
+            :responsein="item.responses"
+          ></comment>
         </div>
       </div>
     </main>
@@ -26,7 +31,19 @@ export default {
   name: "Main",
   data() {
     return {
-      title: ""
+      commentdata: [
+        {
+          id: 0,
+          title:
+            "Should I just go back home and learn more about JavaScript & HTML?",
+          responses: 6
+        },
+        {
+          id: 1,
+          title: "I don't know if I can beat this tough man.",
+          responses: 5
+        }
+      ]
     };
   },
   components: {
@@ -78,6 +95,7 @@ $commentsColor: #2c2e38;
     background: $contentColor;
     border-radius: 45px 15px 0 0;
     .inner {
+      width: 100vw;
       margin-top: 1.5vh;
       border-radius: 20px 20px 0 0;
       background: #f8f8f8;

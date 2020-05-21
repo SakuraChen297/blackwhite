@@ -1,5 +1,8 @@
 <template>
   <div id="Main">
+    <!-- <meta name="full-screen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="x5-fullscreen" content="true" />-->
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no, viewport-fit=cover"
@@ -18,14 +21,14 @@
           <span>PROS</span>
           <span>CONS</span>
         </div>
-        <proconContent class="proconContent"></proconContent>
+        <proconContent ref="proconContent" class="proconContent"></proconContent>
         <van-button color="#2c2e38" size="large" @click="showPopup" id="addResponse">
           <div>Add your response</div>
         </van-button>
       </div>
     </main>
     <van-popup class="popper" v-model="show" position="bottom" round>
-      <popup></popup>
+      <popup ref="popup" @getcache="cacheGet"></popup>
     </van-popup>
   </div>
 </template>
@@ -48,13 +51,33 @@ export default {
     proconBar
   },
   methods: {
+    cacheGet(data) {
+      console.log(data);
+      if (data.value > 50) {
+        this.$refs.proconContent.prodata.push(data);
+      } else {
+        this.$refs.proconContent.condata.push(data);
+      }
+      this.show = false;
+      this.$refs.popup.input = "";
+      this.$refs.popup.value = 50;
+    },
     showPopup() {
       this.show = true;
     },
 
     goback() {
+      if (this.value !== "") {
+      }
       this.$router.replace("/Main");
+    },
+    preventTouch(e) {
+      e.preventDefault();
     }
+  },
+  mounted() {
+    this.$refs.proconContent.prodata = [];
+    this.$refs.proconContent.condata = [];
   }
 };
 </script>
