@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "4a650c9066395744c7c7d81c24baa213",
+    "revision": "aa326eff2ae0cc97387f4e7019def7c9",
     "url": "/blackwhite/index.html"
   },
   {
@@ -12,11 +12,11 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/blackwhite/robots.txt"
   },
   {
-    "revision": "a8124833b3051cd1fc19",
-    "url": "/blackwhite/static/css/app.15dc8561.css"
+    "revision": "430e69c6205d296365b2",
+    "url": "/blackwhite/static/css/app.769e3bf2.css"
   },
   {
-    "revision": "a89eb1f5d7e6f5b6d184",
+    "revision": "fb81c47d589e1e08eda2",
     "url": "/blackwhite/static/css/chunk-vendors.000e40df.css"
   },
   {
@@ -24,15 +24,15 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/blackwhite/static/img/logo.82b9c7a5.png"
   },
   {
-    "revision": "2ba9a860344cd5c0dce7",
-    "url": "/blackwhite/static/js/about.18f0c76f.js"
+    "revision": "808574da6d6c97423dd0",
+    "url": "/blackwhite/static/js/about.7e766ea9.js"
   },
   {
-    "revision": "a8124833b3051cd1fc19",
-    "url": "/blackwhite/static/js/app.5bc6a576.js"
+    "revision": "430e69c6205d296365b2",
+    "url": "/blackwhite/static/js/app.c117a2d9.js"
   },
   {
-    "revision": "a89eb1f5d7e6f5b6d184",
-    "url": "/blackwhite/static/js/chunk-vendors.007debd6.js"
+    "revision": "fb81c47d589e1e08eda2",
+    "url": "/blackwhite/static/js/chunk-vendors.0d74f1a4.js"
   }
 ]);
