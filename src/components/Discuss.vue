@@ -21,8 +21,16 @@
           <span>PROS</span>
           <span>CONS</span>
         </div>
-        <proconContent ref="proconContent" class="proconContent"></proconContent>
-        <van-button color="#2c2e38" size="large" @click="showPopup" id="addResponse">
+        <proconContent
+          ref="proconContent"
+          class="proconContent"
+        ></proconContent>
+        <van-button
+          color="#2c2e38"
+          size="large"
+          @click="showPopup"
+          id="addResponse"
+        >
           <div>Add your response</div>
         </van-button>
       </div>
@@ -43,14 +51,14 @@ export default {
   data() {
     return {
       show: false,
-      title: "Should I give this app a review on the App Store?"
+      title: "Should I give this app a review on the App Store?",
     };
   },
   components: {
     proconBar,
     popup,
     proconContent,
-    Main
+    Main,
   },
   methods: {
     // preventTouch(e) {
@@ -73,8 +81,8 @@ export default {
       this.show = false;
       this.$refs.popup.input = "";
       this.$refs.popup.value = 50;
-    }
-  }
+    },
+  },
 };
 </script>
 

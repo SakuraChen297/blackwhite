@@ -54,26 +54,25 @@ module.exports = {
   //有些值像 publicPath 和 historyApiFallback 不应该被修改，因为它们需要和开发服务器的 publicPath 同步以保障正常的工作。
   // 代理配置
   devServer: {
-    host: "0.0.0.0",
+    host: "localhost",
     port: 8080, // 端口号
     https: false, // https:{type:Boolean}
     open: true, //配置自动启动浏览器  open: 'Google Chrome'-默认启动谷歌
-    // proxy: 'http://localhost:9000' // 配置跨域处理,只有一个代理
 
-    // 配置多个代理
-    // proxy: {
-    //   "/api": {
-    //     target: "https://way.jd.com", //目标主机
-    //     ws: true, //代理的WebSockets
-    //     changeOrigin: true, //需要虚拟主机站点
-    //     pathRewrite: {
-    //       "^/api": ""
-    //     }
-    //   }
-    // }
+    proxy: {
+      "/sentiment/score": {
+        target: "http://47.92.236.27:5001/",
+        changeOrigin: false,
+      },
+      "/test": {
+        target: "http://47.92.236.27:5001/",
+        changeOrigin: false,
+      },
+      "/*/": {
+        target: "http://47.92.236.27:8000/",
+        ws: true,
+        changeOrigin: false,
+      },
+    },
   },
-
-  // 第三方插件选项
-  // 这是一个不进行任何 schema 验证的对象，因此它可以用来传递任何第三方插件选项。
-  pluginOptions: {},
 };

@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Home from "@/views/Home.vue";
 import Main from "../components/Main";
 import Discuss from "../components/Discuss";
 import Ask from "../components/Ask";

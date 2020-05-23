@@ -46,6 +46,7 @@
           v-model="sms"
           center
           clearable
+          name="短信验证码"
           label="短信验证码"
           placeholder="请输入短信验证码"
           :rules="[{ required: true, message: '请输入短信验证码' }]"
@@ -57,7 +58,7 @@
               type="primary"
               color="#2c2e38"
               :disabled="show"
-              @click="countDown"
+              @click="sendCode"
               native-type="button"
             >
               <div v-if="!show">发送验证码</div>
@@ -67,7 +68,7 @@
         </van-field>
         <van-button
           class="btn"
-          @click="gotolink"
+          @click="register"
           round
           block
           type="info"
@@ -82,6 +83,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "register",
   data() {
@@ -97,33 +99,79 @@ export default {
     };
   },
   methods: {
-    preventTouch(e) {
-      e.preventDefault();
-    },
-    countDown() {
-      const TIME_COUNT = 5;
-      if (!this.timer) {
-        this.count = TIME_COUNT;
-        this.show = true;
-        this.timer = setInterval(() => {
-          if (this.count > 0 && this.count <= TIME_COUNT) {
-            this.count--;
-          } else {
-            this.show = false;
-            clearInterval(this.timer);
-            this.timer = null;
-          }
-        }, 1000);
-      }
-    },
-    gotolink() {
+    register() {
       if (
         this.username !== "" &&
         this.password !== "" &&
+        this.passwordRe !== "" &&
         this.mailortel !== "" &&
         this.sms !== ""
       ) {
-        this.$router.replace("/signIn");
+        axios({
+          method: "POST",
+          url: "/user/register/",
+          params: {
+            username: this.username,
+            password: this.password,
+            check_password: this.passwordRe,
+            phone_email: this.mailortel,
+            code: this.sms
+          }
+        })
+          .then(res => {
+            alert("注册成功！3s后进入登录界面");
+            console.log("success");
+            console.log(res);
+            setTimeout(() => {
+              this.$router.replace("/signIn");
+            }, 3000);
+            // this.$router.replace("/signIn");
+          })
+          .catch(error => {
+            console.log(error);
+            alert("注册失败！");
+          });
+      }
+    },
+    preventTouch(e) {
+      e.preventDefault();
+    },
+    sendCode() {
+      if (
+        this.username !== "" &&
+        this.password !== "" &&
+        this.passwordRe !== "" &&
+        this.mailortel !== ""
+      ) {
+        if (this.passwordRe === this.password) {
+          const TIME_COUNT = 60;
+          if (!this.timer) {
+            this.count = TIME_COUNT;
+            this.show = true;
+            this.timer = setInterval(() => {
+              if (this.count > 0 && this.count <= TIME_COUNT) {
+                this.count--;
+              } else {
+                this.show = false;
+                clearInterval(this.timer);
+                this.timer = null;
+              }
+            }, 1000);
+          }
+          axios({
+            method: "POST",
+            url: "/send/code/",
+            params: {
+              phone_email: this.mailortel
+            }
+          }).then(res => {
+            console.log("sms successfully send");
+            console.log(res);
+            this.sms = res.msg;
+          });
+        } else {
+          alert("两次密码输入不一致");
+        }
       }
     },
     onSubmit(values) {

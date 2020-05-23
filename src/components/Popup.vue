@@ -15,7 +15,7 @@
       active-color="#2c2e38"
       inactive-color="#ffffff"
       bar-height="14px"
-      :style="{border:'1px solid #2c2e38'}"
+      :style="{ border: '1px solid #2c2e38' }"
     />
     <div id="compareWrapper">
       <span>Strong Con</span>
@@ -25,7 +25,14 @@
     </div>
     <div id="recordWrapper">
       <van-icon id="recordButton" name="stop-circle-o" size="2rem" @click="showOverlay" />
-      <van-field class="input" v-model="input" placeholder="Tell me why?" type="textarea"></van-field>
+      <van-field
+        @input="debouncer"
+        class="input"
+        :value="input"
+        v-model="input"
+        placeholder="Tell me why?"
+        type="textarea"
+      ></van-field>
     </div>
     <van-button @click="postup" color="#2c2e38" size="large" class="postResponse">
       <div>Post response</div>
@@ -43,6 +50,8 @@
 </template>
 
 <script>
+import axios from "axios";
+import _ from "lodash";
 import audioRecord from "../lib/audioRecord.vue";
 export default {
   name: "popup",
@@ -59,6 +68,18 @@ export default {
     audioRecord
   },
   methods: {
+    debouncer: _.debounce(() => {
+      axios({
+        method: "POST",
+        url: "/sentiment/score",
+        data: {
+          text: "苹果很非常十分昂贵"
+        }
+      }).then(res => {
+        console.log("success");
+        console.log(res);
+      });
+    }, 1000),
     postup() {
       if (this.value !== 50 && this.input !== "") {
         console.log(this.value);
@@ -72,7 +93,7 @@ export default {
     },
     showResult(text) {
       console.info("收到识别结果：", text);
-      this.input = text;
+
       this.input2 = text;
     },
     recordStart() {
@@ -80,6 +101,9 @@ export default {
     },
     recordStop() {
       console.info("录音结束");
+      setInterval(() => {
+        this.input = this.input2;
+      }, 500);
       this.overlay = false;
       this.input2 = "";
     },

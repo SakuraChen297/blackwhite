@@ -10,10 +10,10 @@
         <van-field
           :style="{background:'#f8f8f8'}"
           v-model="username"
-          name="用户名/手机"
-          label="用户名/手机"
-          placeholder="用户名/手机"
-          :rules="[{ required: true, message: '请填写用户名/手机' }]"
+          name="用户名/手机/邮箱"
+          label="用户名/手机/邮箱"
+          placeholder="用户名/手机/邮箱"
+          :rules="[{ required: true, message: '请填写用户名/手机/邮箱' }]"
         />
         <van-field
           :style="{background:'#f8f8f8'}"
@@ -25,14 +25,7 @@
           :rules="[{ required: true, message: '请填写密码' }]"
         />
         <div style="margin: 16px;">
-          <van-button
-            @click="gotolink"
-            round
-            block
-            typeC="info"
-            native-type="submit"
-            color="#2c2e38"
-          >
+          <van-button @click="signin" round block typeC="info" native-type="submit" color="#2c2e38">
             <div :style="{ font: 'black' ,fontWeight:'bold'}">登录</div>
           </van-button>
         </div>
@@ -42,16 +35,40 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "signIn",
   data() {
     return {
       username: "",
-      password: "",
-      mail: ""
+      password: ""
     };
   },
   methods: {
+    signin() {
+      if (this.username !== "" && this.password !== "") {
+        axios({
+          method: "POST",
+          url: "/user/login/",
+          params: {
+            username: this.username,
+            password: this.password
+          }
+        })
+          .then(res => {
+            alert("登录成功！3s后进入主界面");
+            console.log("success");
+            console.log(res);
+            setTimeout(() => {
+              this.$router.replace("/Main");
+            }, 3000);
+          })
+          .catch(error => {
+            console.log(error);
+            alert("登陆失败！请检查您的用户名与密码是否匹配");
+          });
+      }
+    },
     preventTouch(e) {
       e.preventDefault();
     },
