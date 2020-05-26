@@ -9,7 +9,7 @@
       <van-form class="form" @submit="onSubmit">
         <van-field
           center
-          class="first"
+          class="field"
           :style="{background:'#f8f8f8'}"
           v-model="username"
           name="用户名"
@@ -19,7 +19,7 @@
         />
         <van-field
           center
-          class="second"
+          class="field"
           :style="{background:'#f8f8f8'}"
           v-model="password"
           type="password"
@@ -30,7 +30,7 @@
         />
         <van-field
           center
-          class="third"
+          class="field"
           :style="{background:'#f8f8f8'}"
           v-model="passwordRe"
           type="password"
@@ -40,7 +40,7 @@
           :rules="[{ required: true, message: '请再输入一次密码' }]"
         />
         <van-field
-          class="forth"
+          class="field"
           :style="{background:'#f8f8f8'}"
           v-model="mailortel"
           center
@@ -50,7 +50,7 @@
           :rules="[{ required: true, message: '请填写邮箱或手机号码' }]"
         />
         <van-field
-          class="fivth"
+          class="field"
           :style="{background:'#f8f8f8'}"
           v-model="sms"
           center
@@ -215,19 +215,8 @@ $commentsColor: #2c2e38;
     height: 70vh;
     margin-top: 10vh;
     background: #f8f8f8;
-    .first {
-      height: 10vh;
-    }
-    .second {
-      height: 10vh;
-    }
-    .third {
-      height: 10vh;
-    }
-    .forth {
-      height: 10vh;
-    }
-    .fivth {
+    .field {
+      font-weight: bold;
       height: 10vh;
     }
   }

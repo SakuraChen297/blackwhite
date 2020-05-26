@@ -9,7 +9,7 @@
       <van-form class="form" @submit="onSubmit">
         <van-field
           center
-          class="first"
+          class="field"
           :style="{background:'#f8f8f8'}"
           v-model="username"
           name="用户名/手机/邮箱"
@@ -19,7 +19,7 @@
         />
         <van-field
           center
-          class="second"
+          class="field"
           :style="{background:'#f8f8f8'}"
           v-model="password"
           type="password"
@@ -118,10 +118,8 @@ $commentsColor: #2c2e38;
     height: 70vh;
     margin-top: 10vh;
     background: #f8f8f8;
-    .first {
-      height: 10vh;
-    }
-    .second {
+    .field {
+      font-weight: bold;
       height: 10vh;
     }
     .noregister {

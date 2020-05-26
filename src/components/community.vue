@@ -52,7 +52,12 @@ export default {
       this.$router.push({ name: "Main" });
     },
     gotoAsk() {
-      this.$router.push({ name: "Ask" });
+      if (this.$store.getters.token === undefined) {
+        alert("未登录，请先登录");
+        this.$router.push({ name: "signIn" });
+      } else {
+        this.$router.push({ name: "Ask" });
+      }
     },
     onLoad() {
       // 异步更新数据
@@ -94,8 +99,7 @@ $conbarcolor: #ffffff;
   height: 100%;
   background: $themeColor;
   .searchIn {
-    height: 15vh;
-    font-size: 1.5em;
+    height: 10vh;
     font-weight: bold;
     .search {
       margin: 1vw;
@@ -117,7 +121,7 @@ $conbarcolor: #ffffff;
     width: 5vh;
   }
   .content {
-    height: 82%;
+    height: 80%;
     overflow: scroll;
     .description {
       padding-top: 3vh;
