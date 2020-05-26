@@ -63,6 +63,7 @@ export default {
         this.commentdata = res.data.data;
       },
       error => {
+        alert("未登录，请先登录");
         this.$router.replace("signIn");
       }
     );

@@ -1,6 +1,6 @@
 <template>
   <div class="Main">
-    <van-search v-model="value" shape="round" placeholder="请输入搜索关键词">
+    <van-search class="searchIn" v-model="value" shape="round" placeholder="请输入搜索关键词">
       <template #left>
         <van-icon name="wap-nav" size="18" color="#c0c2d4" class="search" />
       </template>
@@ -91,10 +91,16 @@ $conbarcolor: #ffffff;
 }
 
 .Main {
+  height: 100%;
   background: $themeColor;
-  .search {
-    margin: 1vw;
-    margin-right: 3vw;
+  .searchIn {
+    height: 15vh;
+    font-size: 1.5em;
+    font-weight: bold;
+    .search {
+      margin: 1vw;
+      margin-right: 3vw;
+    }
   }
   .left {
     margin-left: 15vw;
@@ -111,7 +117,7 @@ $conbarcolor: #ffffff;
     width: 5vh;
   }
   .content {
-    height: 83vh;
+    height: 82%;
     overflow: scroll;
     .description {
       padding-top: 3vh;

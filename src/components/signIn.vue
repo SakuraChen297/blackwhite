@@ -8,6 +8,7 @@
     <div class="inner">
       <van-form class="form" @submit="onSubmit">
         <van-field
+          center
           class="first"
           :style="{background:'#f8f8f8'}"
           v-model="username"
@@ -17,6 +18,7 @@
           :rules="[{ required: true, message: '请填写用户名/手机/邮箱' }]"
         />
         <van-field
+          center
           class="second"
           :style="{background:'#f8f8f8'}"
           v-model="password"

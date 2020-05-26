@@ -8,6 +8,7 @@
     <div class="inner">
       <van-form class="form" @submit="onSubmit">
         <van-field
+          center
           class="first"
           :style="{background:'#f8f8f8'}"
           v-model="username"
@@ -17,6 +18,7 @@
           :rules="[{ required: true, message: '请填写用户名' }]"
         />
         <van-field
+          center
           class="second"
           :style="{background:'#f8f8f8'}"
           v-model="password"
@@ -27,6 +29,7 @@
           :rules="[{ required: true, message: '请填写密码' }]"
         />
         <van-field
+          center
           class="third"
           :style="{background:'#f8f8f8'}"
           v-model="passwordRe"
@@ -40,6 +43,7 @@
           class="forth"
           :style="{background:'#f8f8f8'}"
           v-model="mailortel"
+          center
           name="邮箱/手机"
           label="邮箱/手机"
           placeholder="邮箱或手机号码"
