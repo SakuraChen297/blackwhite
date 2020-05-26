@@ -58,15 +58,9 @@ export default {
       params: {
         token: this.$store.getters.token
       }
-    }).then(
-      res => {
-        this.commentdata = res.data.data;
-      },
-      error => {
-        alert("未登录，请先登录");
-        this.$router.replace("signIn");
-      }
-    );
+    }).then(res => {
+      this.commentdata = res.data.data;
+    });
   }
 };
 </script>

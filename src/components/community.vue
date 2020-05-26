@@ -49,10 +49,15 @@ export default {
   },
   methods: {
     gotoMain() {
-      this.$router.push({ name: "Main" });
+      if (this.$store.getters.token === null) {
+        alert("未登录，请先登录");
+        this.$router.push({ name: "signIn" });
+      } else {
+        this.$router.push({ name: "Main" });
+      }
     },
     gotoAsk() {
-      if (this.$store.getters.token === undefined) {
+      if (this.$store.getters.token === null) {
         alert("未登录，请先登录");
         this.$router.push({ name: "signIn" });
       } else {
