@@ -48,7 +48,9 @@ module.exports = {
 
   // 向 PWA 插件传递选项。
   // https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa
-  pwa: {},
+  pwa: {
+    name: 'BlackWhite'
+  },
 
   // 所有 webpack-dev-server 的选项都支持。注意：有些值像 host、port 和 https 可能会被命令行参数覆写。
   //有些值像 publicPath 和 historyApiFallback 不应该被修改，因为它们需要和开发服务器的 publicPath 同步以保障正常的工作。
