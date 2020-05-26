@@ -70,13 +70,13 @@ export default {
     // }, @touchmove="preventTouch"
     contagDown(data) {
       for (let i = 0; i < data.length; i++) {
-        this.conKey.push(data[i].word);
+        this.conKey.push(data[i]);
       }
     },
 
     protagDown(data) {
       for (let i = 0; i < data.length; i++) {
-        this.proKey.push(data[i].word);
+        this.proKey.push(data[i]);
       }
     },
     goLite() {
@@ -104,10 +104,8 @@ export default {
           }
         }).then(res => {
           console.log("pros in success");
-          console.log(res);
         });
       } else if (data.value < 50) {
-        console.log(this.conKey.join(","));
         this.$refs.proconContent.condata.push(data);
         axios({
           method: "POST",

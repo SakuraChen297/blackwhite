@@ -44,6 +44,7 @@ export default {
       method: "GET",
       url: `/record/${this.id}/pros`
     }).then(res => {
+      console.log(res);
       let prodata = res.data.pros;
       if (prodata.length === 0) {
         console.log("no pro");

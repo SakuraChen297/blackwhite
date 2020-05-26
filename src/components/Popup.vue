@@ -23,7 +23,7 @@
       <span>Pro</span>
       <span>Strong Pro</span>
       <div class="tagWrapper">
-        <tag class="tag" v-for="(item,index) in keyData" :key="index" :tagname="item.word" />
+        <tag class="tag" v-for="(item,index) in keyData" :key="index" :tagname="item" />
       </div>
     </div>
     <div id="recordWrapper">
@@ -97,15 +97,17 @@ export default {
       });
       axios({
         method: "POST",
-        url: "/xf",
+        url: "/bd/comment",
         data: {
           text: this.input
         }
       }).then(res => {
-        let data = JSON.parse(res.data.replace(/'/g, '"'));
+        // let data = JSON.parse(res.data.replace(/'/g, '"'));
         // let e = Math.round(data.keyData.length * 0.3);
         // this.keyData = data.keyData.slice(0, e);
-        this.keyData = data.keyData;
+        for (let i = 0; i < res.data.items.length; i++) {
+          this.keyData.push(res.data.items[i].prop);
+        }
       });
     }, 1000),
     postup() {

@@ -64,14 +64,14 @@ export default {
           }
         })
           .then(res => {
-            alert("登录成功！3s后进入主界面");
+            alert("登录成功！2s后进入主界面");
             console.log("success");
             console.log(res);
             this.$store.commit("handleToken", res.data.token);
             this.$store.commit("handleUserName", this.username);
             setTimeout(() => {
-              this.$router.replace("/Main");
-            }, 3000);
+              this.$router.replace("/community");
+            }, 2000);
           })
           .catch(error => {
             console.log(error);
@@ -123,7 +123,9 @@ $commentsColor: #2c2e38;
       height: 10vh;
     }
     .noregister {
+      width: 10vw;
       margin: 2vw;
+      margin-left: 80vw;
       text-align: right;
       font-weight: bold;
     }
