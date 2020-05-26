@@ -8,7 +8,7 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no, viewport-fit=cover"
     />
     <!-- <van-number-keyboard safe-area-inset-bottom /> -->
-    <div class="back" @click="goback">Back</div>
+    <div class="back" @click="getTitle">Back</div>
     <van-field class="addTitle" v-model="value" placeholder="What is your dilema?" type="textarea" />
     <main class="content">
       <div class="inner">
@@ -28,12 +28,13 @@
       </div>
     </main>
     <van-popup class="popper" v-model="show" position="bottom" round>
-      <popup ref="popup" @getcache="cacheGet"></popup>
+      <popup ref="popup" :title="value" @getcache="cacheGet"></popup>
     </van-popup>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 import proconBar from "./proconBar";
 import proconContent from "./proconContent";
 import popup from "./Popup";
@@ -42,7 +43,8 @@ export default {
   data() {
     return {
       show: false,
-      value: ""
+      value: "",
+      id: 0
     };
   },
   components: {
@@ -51,6 +53,26 @@ export default {
     proconBar
   },
   methods: {
+    getTitle() {
+      console.log(this.value);
+      if (this.value === "") {
+        this.$router.replace("/community");
+      } else {
+        axios({
+          method: "POST",
+          url: "/record/",
+          params: {
+            token: this.$store.getters.token,
+            title: this.value
+          }
+        }).then(res => {
+          this.id = res.data.data.id;
+          console.log(this.id);
+          console.log("success");
+          this.$router.replace("/community");
+        });
+      }
+    },
     cacheGet(data) {
       console.log(data);
       if (data.value > 50) {
@@ -65,12 +87,6 @@ export default {
     showPopup() {
       this.show = true;
     },
-
-    goback() {
-      if (this.value !== "") {
-      }
-      this.$router.replace("/Main");
-    },
     preventTouch(e) {
       e.preventDefault();
     }
@@ -78,6 +94,33 @@ export default {
   mounted() {
     this.$refs.proconContent.prodata = [];
     this.$refs.proconContent.condata = [];
+  },
+  beforeDestroy() {
+    console.log(this.id);
+    let pro = this.$refs.proconContent.prodata,
+      con = this.$refs.proconContent.condata;
+    if (pro.length !== 0) {
+      for (let i = 0; i < pro.length; i++) {
+        axios({
+          method: "POST",
+          url: `/record/${this.id}/pros`,
+          params: {
+            pros: pro[i].pros
+          }
+        }).then(console.log("pros input successfully"));
+      }
+    }
+    if (con.length !== 0) {
+      for (let i = 0; i < con.length; i++) {
+        axios({
+          method: "POST",
+          url: `/record/${this.id}/cons`,
+          params: {
+            cons: con[i].cons
+          }
+        }).then(console.log("cons input successfully"));
+      }
+    }
   }
 };
 </script>

@@ -4,18 +4,20 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no, viewport-fit=cover"
     />
+    <!-- <div class="back" @click="back">Back</div> -->
     <h1>My Decisions</h1>
-    <!-- <img src="./images/logo2.jpg" id="logo" /> -->
+    <div id="signer" @click="back">{{$store.getters.userName}}</div>
     <main class="content">
       <div class="inner">
-        <div class="addNew" @click="gotolink1">
+        <!-- <div class="addNew" @click="gotolink1">
           <van-icon name="add" id="add" size="35" />
           <span class="ask">Ask New Question</span>
-        </div>
+        </div>-->
         <div class="comments">
           <comment
             v-for="item in commentdata"
             :key="item.id"
+            :keypass="item.id"
             :titlein="item.title"
             :responsein="item.responses"
           ></comment>
@@ -26,36 +28,44 @@
 </template>
 
 <script>
+import axios from "axios";
 import comment from "./comment";
 export default {
   name: "Main",
   data() {
     return {
-      commentdata: [
-        {
-          id: 0,
-          title:
-            "Should I just go back home and learn more about JavaScript & HTML?",
-          responses: 6
-        },
-        {
-          id: 1,
-          title: "I don't know if I can beat this tough man.",
-          responses: 5
-        }
-      ]
+      commentdata: []
     };
   },
   components: {
     comment
   },
   methods: {
+    back() {
+      this.$router.replace("/community");
+    },
     preventTouch(e) {
       e.preventDefault();
-    },
-    gotolink1() {
-      this.$router.replace("/Ask");
     }
+    // gotolink1() {
+    //   this.$router.replace("/Ask");
+    // }
+  },
+  mounted() {
+    axios({
+      method: "GET",
+      url: "/record/",
+      params: {
+        token: this.$store.getters.token
+      }
+    }).then(
+      res => {
+        this.commentdata = res.data.data;
+      },
+      error => {
+        this.$router.replace("signIn");
+      }
+    );
   }
 };
 </script>
@@ -77,18 +87,28 @@ $commentsColor: #2c2e38;
   height: 100%;
   display: flex;
   background: $themeColor;
+  .back {
+    position: absolute;
+    font-weight: bold;
+    font-size: 0.8em;
+    margin-left: 5vh;
+    margin-top: 5vh;
+    width: 5vh;
+    height: 2em;
+  }
   h1 {
     white-space: nowrap;
-    margin-top: 16%;
+    margin-top: 25%;
     margin-left: 6%;
     height: 6vh;
     width: auto;
   }
-  // #logo {
-  //   margin-left: 15vw;
-  //   margin-top: 0;
-  //   height: 12vh;
-  // }
+  #signer {
+    font-weight: bold;
+    margin-left: 15vw;
+    margin-top: 5vh;
+    height: 12vh;
+  }
   .content {
     position: absolute;
     bottom: 0;

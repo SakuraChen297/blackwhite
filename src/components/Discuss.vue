@@ -8,7 +8,11 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no, viewport-fit=cover"
     />
     <!-- <van-number-keyboard safe-area-inset-bottom /> -->
-    <div class="back" @click="goback">Back</div>
+    <div class="gotoWrapper">
+      <div class="back" @click="goback">Back</div>
+      <div class="lite" @click="goLite">Lite</div>
+    </div>
+
     <div class="title">{{ title }}</div>
     <main class="content">
       <div class="inner">
@@ -21,22 +25,20 @@
           <span>PROS</span>
           <span>CONS</span>
         </div>
-        <proconContent
-          ref="proconContent"
-          class="proconContent"
-        ></proconContent>
-        <van-button
-          color="#2c2e38"
-          size="large"
-          @click="showPopup"
-          id="addResponse"
-        >
+        <proconContent ref="proconContent" class="proconContent"></proconContent>
+        <van-button color="#2c2e38" size="large" @click="showPopup" id="addResponse">
           <div>Add your response</div>
         </van-button>
       </div>
     </main>
     <van-popup class="popper" v-model="show" position="bottom" round>
-      <popup ref="popup" @getcache="cacheGet"></popup>
+      <popup
+        ref="popup"
+        :title="title"
+        @getcache="cacheGet"
+        @getproTag="protagDown"
+        @getconTag="contagDown"
+      ></popup>
     </van-popup>
   </div>
 </template>
@@ -45,25 +47,44 @@
 import proconBar from "./proconBar";
 import proconContent from "./proconContent";
 import popup from "./Popup";
-import Main from "./Main";
+import axios from "axios";
 export default {
   name: "Discuss",
   data() {
     return {
       show: false,
-      title: "Should I give this app a review on the App Store?",
+      title: "",
+      id: 0,
+      proKey: [],
+      conKey: []
     };
   },
   components: {
     proconBar,
     popup,
-    proconContent,
-    Main,
+    proconContent
   },
   methods: {
     // preventTouch(e) {
     //   e.preventDefault();
     // }, @touchmove="preventTouch"
+    contagDown(data) {
+      for (let i = 0; i < data.length; i++) {
+        this.conKey.push(data[i].word);
+      }
+    },
+
+    protagDown(data) {
+      for (let i = 0; i < data.length; i++) {
+        this.proKey.push(data[i].word);
+      }
+    },
+    goLite() {
+      this.$router.push({
+        name: "Lite",
+        params: { id: this.id, keyData: this.keyData }
+      });
+    },
     showPopup() {
       this.show = true;
     },
@@ -72,17 +93,48 @@ export default {
       this.$router.replace("/Main");
     },
     cacheGet(data) {
-      console.log(data);
       if (data.value > 50) {
         this.$refs.proconContent.prodata.push(data);
-      } else {
+        axios({
+          method: "POST",
+          url: `/record/${this.id}/pros/`,
+          params: {
+            pros: data.pros,
+            tags: this.proKey.join(",")
+          }
+        }).then(res => {
+          console.log("pros in success");
+          console.log(res);
+        });
+      } else if (data.value < 50) {
+        console.log(this.conKey.join(","));
         this.$refs.proconContent.condata.push(data);
+        axios({
+          method: "POST",
+          url: `/record/${this.id}/cons/`,
+          params: {
+            cons: data.cons,
+            tags: this.conKey.join(",")
+          }
+        }).then(console.log("cons in success"));
       }
-      this.show = false;
       this.$refs.popup.input = "";
       this.$refs.popup.value = 50;
-    },
+      this.show = false;
+    }
   },
+  mounted() {
+    this.id = this.$route.params.id;
+    axios({
+      method: "GET",
+      url: `/record/${this.id}/`
+    }).then(res => {
+      let data = res.data.data;
+      this.title = data.title.title;
+      this.$refs.proconContent.prodata = data.pros;
+      this.$refs.proconContent.condata = data.cons;
+    });
+  }
 };
 </script>
 
@@ -103,12 +155,22 @@ $commentsColor: #2c2e38;
 #Main {
   height: 100%;
   background: $themeColor;
-  .back {
-    font-weight: bold;
-    font-size: 0.8em;
-    margin-left: 5vh;
-    margin-top: 5vh;
-    width: 5vh;
+  .gotoWrapper {
+    display: flex;
+    .back {
+      font-weight: bold;
+      font-size: 0.8em;
+      margin-left: 5vh;
+      margin-top: 5vh;
+      width: 5vh;
+    }
+    .lite {
+      font-weight: bold;
+      font-size: 0.8em;
+      margin-left: 66vw;
+      margin-top: 5vh;
+      width: 5vh;
+    }
   }
   .title {
     margin: 5vh;

@@ -8,14 +8,16 @@
     <div class="inner">
       <van-form class="form" @submit="onSubmit">
         <van-field
+          class="first"
           :style="{background:'#f8f8f8'}"
           v-model="username"
           name="用户名/手机/邮箱"
-          label="用户名/手机/邮箱"
+          label="用户"
           placeholder="用户名/手机/邮箱"
           :rules="[{ required: true, message: '请填写用户名/手机/邮箱' }]"
         />
         <van-field
+          class="second"
           :style="{background:'#f8f8f8'}"
           v-model="password"
           type="password"
@@ -28,6 +30,7 @@
           <van-button @click="signin" round block typeC="info" native-type="submit" color="#2c2e38">
             <div :style="{ font: 'black' ,fontWeight:'bold'}">登录</div>
           </van-button>
+          <div class="noregister" @click="goregister">注册</div>
         </div>
       </van-form>
     </div>
@@ -45,6 +48,9 @@ export default {
     };
   },
   methods: {
+    goregister() {
+      this.$router.replace("/register");
+    },
     signin() {
       if (this.username !== "" && this.password !== "") {
         axios({
@@ -59,6 +65,8 @@ export default {
             alert("登录成功！3s后进入主界面");
             console.log("success");
             console.log(res);
+            this.$store.commit("handleToken", res.data.token);
+            this.$store.commit("handleUserName", this.username);
             setTimeout(() => {
               this.$router.replace("/Main");
             }, 3000);
@@ -108,6 +116,17 @@ $commentsColor: #2c2e38;
     height: 70vh;
     margin-top: 10vh;
     background: #f8f8f8;
+    .first {
+      height: 10vh;
+    }
+    .second {
+      height: 10vh;
+    }
+    .noregister {
+      margin: 2vw;
+      text-align: right;
+      font-weight: bold;
+    }
   }
 }
 </style>

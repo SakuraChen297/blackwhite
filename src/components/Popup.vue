@@ -2,16 +2,16 @@
   <div class="Main">
     <div class="trustWrapper">
       <div class="span1">HELP ME DECIDE</div>
-      <div class="title">Should I just go back home and learn more about JavaScript & HTML?</div>
+      <div class="title">{{ realtitle }}</div>
       <div id="decisionWrapper">
         <!-- <img src="./images/decision.jpg" /> -->
-        <h3>I'm undecided.</h3>
+        <div class="decision">{{ decision }}</div>
       </div>
     </div>
     <van-slider
       class="slider"
       v-model="value"
-      :step="25"
+      :step="1"
       active-color="#2c2e38"
       inactive-color="#ffffff"
       bar-height="14px"
@@ -22,13 +22,18 @@
       <span>Con</span>
       <span>Pro</span>
       <span>Strong Pro</span>
+      <div class="tagWrapper">
+        <tag class="tag" v-for="(item,index) in keyData" :key="index" :tagname="item.word" />
+      </div>
     </div>
     <div id="recordWrapper">
       <van-icon id="recordButton" name="stop-circle-o" size="2rem" @click="showOverlay" />
       <van-field
         @input="debouncer"
+        @compositionstart="flag=false"
+        @compositionend="flag=true"
+        @keyup="pinyin"
         class="input"
-        :value="input"
         v-model="input"
         placeholder="Tell me why?"
         type="textarea"
@@ -50,41 +55,68 @@
 </template>
 
 <script>
+import tag from "./tag";
 import axios from "axios";
 import _ from "lodash";
 import audioRecord from "../lib/audioRecord.vue";
 export default {
   name: "popup",
+  props: ["title"],
   data() {
     return {
+      flag: true,
       input: "",
       input2: "",
       overlay: false,
       value: 50,
-      cache: {}
+      cache: {},
+      realtitle: this.title,
+      decision: "I'm undecided.",
+      keyData: []
     };
   },
   components: {
-    audioRecord
+    audioRecord,
+    tag
   },
   methods: {
-    debouncer: _.debounce(() => {
+    pinyin() {
+      if (this.flag) {
+        this.debouncer();
+      }
+    },
+    debouncer: _.debounce(function() {
       axios({
         method: "POST",
         url: "/sentiment/score",
         data: {
-          text: "苹果很非常十分昂贵"
+          text: this.input
         }
       }).then(res => {
-        console.log("success");
-        console.log(res);
+        this.value = res.data * 100;
+      });
+      axios({
+        method: "POST",
+        url: "/xf",
+        data: {
+          text: this.input
+        }
+      }).then(res => {
+        let data = JSON.parse(res.data.replace(/'/g, '"'));
+        // let e = Math.round(data.keyData.length * 0.3);
+        // this.keyData = data.keyData.slice(0, e);
+        this.keyData = data.keyData;
       });
     }, 1000),
     postup() {
       if (this.value !== 50 && this.input !== "") {
-        console.log(this.value);
-        this.cache = { value: this.value, input: this.input };
-        console.log(this.cache);
+        if (this.value > 50) {
+          this.cache = { value: this.value, pros: this.input };
+          this.$emit("getproTag", this.keyData);
+        } else if (this.value < 50) {
+          this.cache = { value: this.value, cons: this.input };
+          this.$emit("getconTag", this.keyData);
+        }
         this.$emit("getcache", this.cache);
       }
     },
@@ -93,7 +125,6 @@ export default {
     },
     showResult(text) {
       console.info("收到识别结果：", text);
-
       this.input2 = text;
     },
     recordStart() {
@@ -101,9 +132,8 @@ export default {
     },
     recordStop() {
       console.info("录音结束");
-      setInterval(() => {
-        this.input = this.input2;
-      }, 500);
+      this.input = this.input2;
+      this.debouncer();
       this.overlay = false;
       this.input2 = "";
     },
@@ -115,6 +145,24 @@ export default {
     },
     recordFailed(error) {
       console.info("识别失败，错误栈：", error);
+    }
+  },
+  watch: {
+    title(ti) {
+      this.realtitle = ti;
+    },
+    value(val) {
+      if (50 < val && val <= 75) {
+        this.decision = "I agree.";
+      } else if (75 < val && val <= 100) {
+        this.decision = "I strongly agree.";
+      } else if (25 <= val && val < 50) {
+        this.decision = "I disagree.";
+      } else if (0 <= val && val < 25) {
+        this.decision = "I strongly disagree.";
+      } else {
+        this.decision = "I'm undecided.";
+      }
     }
   }
 };
@@ -132,6 +180,7 @@ $commentsColor: #2c2e38;
       color: grey;
     }
     .title {
+      padding: 3vw;
       margin-top: 2vh;
       font-weight: bold;
       font-size: 1.3em;
@@ -141,16 +190,14 @@ $commentsColor: #2c2e38;
       width: 85vw;
     }
     #decisionWrapper {
-      display: flex;
-      justify-content: center;
-      // img {
-      //   transform: translateX(-1.5vw);
-      //   height: 8vh;
-      // }
-      // h3 {
-      //   transform: translateY(-0.5vh);
-      //   padding-left: 2vh;
-      // }
+      display: block;
+      .decision {
+        text-align: center;
+        padding: 3vw;
+        font-weight: bold;
+        margin-bottom: 2vh;
+        font-size: 1.3em;
+      }
     }
   }
   .slider {
@@ -160,16 +207,29 @@ $commentsColor: #2c2e38;
     margin-top: 5vh;
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     span {
       font-size: 0.9em;
       font-weight: bold;
       width: 11vw;
       text-align: center;
     }
+    .tagWrapper {
+      padding-bottom: 0;
+      margin-top: 2vh;
+      display: flex;
+      flex-wrap: wrap;
+      height: auto;
+      width: 100%;
+      .tag {
+        padding: 0;
+        margin-bottom: 1vh;
+        margin-right: 2vw;
+      }
+    }
   }
   #recordWrapper {
     display: flex;
-    margin-top: 3vh;
     height: 15vh;
     #recordButton {
       height: 10vh;

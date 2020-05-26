@@ -7,6 +7,8 @@ import Ask from "../components/Ask";
 import recorder from "../components/recorder";
 import register from "../components/register";
 import signIn from "../components/signIn";
+import Lite from "../components/Lite";
+import community from "../components/community";
 Vue.use(VueRouter);
 
 VueRouter.prototype.goBack = function() {
@@ -16,8 +18,8 @@ VueRouter.prototype.goBack = function() {
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
+    name: "community",
+    component: community,
   },
   {
     path: "/about",
@@ -57,6 +59,16 @@ const routes = [
     path: "/signIn",
     name: "signIn",
     component: signIn,
+  },
+  {
+    path: "/Lite",
+    name: "Lite",
+    component: Lite,
+  },
+  {
+    path: "/community",
+    name: "community",
+    component: community,
   },
 ];
 

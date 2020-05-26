@@ -10,17 +10,30 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "adviceright",
   data() {
     return {
       show: true,
-      a: this.inputCon
+      a: this.inputCon,
+      id: 0
     };
   },
   props: ["inputCon"],
   methods: {
     getoff() {
+      this.show = false;
+      for (let i = 0; i < this.$parent.condata.length; i++) {
+        if (this.a === this.$parent.condata[i].cons) {
+          this.id = this.$parent.condata[i].id;
+          break;
+        }
+      }
+      axios({
+        method: "DELETE",
+        url: `/cons/${this.id}`
+      }).then(console.log("Delete successfully"));
       this.show = false;
     }
   }

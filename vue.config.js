@@ -60,6 +60,10 @@ module.exports = {
     open: true, //配置自动启动浏览器  open: 'Google Chrome'-默认启动谷歌
 
     proxy: {
+      "/xf": {
+        target: "http://47.92.236.27:5001/",
+        changeOrigin: false,
+      },
       "/sentiment/score": {
         target: "http://47.92.236.27:5001/",
         changeOrigin: false,

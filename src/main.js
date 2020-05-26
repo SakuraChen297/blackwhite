@@ -4,6 +4,11 @@ import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
 import {
+  NavBar,
+  Card,
+  Search,
+  List,
+  Tag,
   Popup,
   Button,
   Slider,
@@ -16,7 +21,11 @@ import {
   Icon,
 } from "vant";
 import "vant/lib/index.css";
-
+Vue.use(NavBar);
+Vue.use(Card);
+Vue.use(Search);
+Vue.use(List);
+Vue.use(Tag);
 Vue.use(Overlay);
 Vue.use(Form);
 Vue.use(Icon);
