@@ -50,12 +50,13 @@ module.exports = {
   // https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa
   pwa: {
     name: "BlackWhite",
-    favicon32: "img/icons/logo.png",
-    favicon16: "img/icons/logo.png",
-    appleTouchIcon: "img/icons/logo.png",
-    // maskIcon: "img/icons/safari-pinned-tab.svg",
-    maskIcon: "img/icons/logo.png",
-    msTileImage: "img/icons/logo.png",
+    iconPaths: {
+      favicon32: "faviconfc.ico",
+      favicon16: "faviconfc.ico",
+      appleTouchIcon: "faviconfc.ico",
+      maskIcon: "faviconfc.ico",
+      msTileImage: "faviconfc.ico",
+    },
   },
 
   // 所有 webpack-dev-server 的选项都支持。注意：有些值像 host、port 和 https 可能会被命令行参数覆写。
