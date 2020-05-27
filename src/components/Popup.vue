@@ -23,7 +23,13 @@
       <span>Pro</span>
       <span>Strong Pro</span>
       <div class="tagWrapper">
-        <tag class="tag" v-for="(item,index) in keyData" :key="index" :tagname="item" />
+        <tag
+          @closetag="tagDelete"
+          class="tag"
+          v-for="(item,index) in keyData"
+          :key="index"
+          :tagname="item"
+        />
       </div>
     </div>
     <div id="recordWrapper">
@@ -80,6 +86,13 @@ export default {
     tag
   },
   methods: {
+    tagDelete(data) {
+      for (let i = 0; i < this.keyData.length; i++) {
+        if (this.keyData[i] === data) {
+          this.keyData.splice(i, 1);
+        }
+      }
+    },
     pinyin() {
       if (this.flag) {
         this.debouncer();
@@ -88,7 +101,7 @@ export default {
     debouncer: _.debounce(function() {
       axios({
         method: "POST",
-        url: "/sentiment/score",
+        url: "/api/algorithmn/sentiment/score",
         data: {
           text: this.input
         }
@@ -97,7 +110,7 @@ export default {
       });
       axios({
         method: "POST",
-        url: "/bd/comment",
+        url: "/api/algorithmn/bd/comment",
         data: {
           text: this.input
         }
@@ -166,6 +179,11 @@ export default {
         this.decision = "I'm undecided.";
       }
     }
+  },
+  beforeDestroy() {
+    this.keyData = [];
+    this.input = "";
+    this.value = 50;
   }
 };
 </script>

@@ -54,7 +54,7 @@ export default {
   mounted() {
     axios({
       method: "GET",
-      url: "/record/",
+      url: "/api/record/",
       params: {
         token: this.$store.getters.token
       }

@@ -57,7 +57,7 @@ export default {
       if (this.username !== "" && this.password !== "") {
         axios({
           method: "POST",
-          url: "/user/login/",
+          url: "/api/user/login/",
           params: {
             username: this.username,
             password: this.password

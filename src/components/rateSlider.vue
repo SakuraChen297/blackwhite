@@ -28,7 +28,7 @@ export default {
   mounted() {
     axios({
       method: "GET",
-      url: `/record/${this.id}/keys`
+      url: `/api/record/${this.id}/keys/`
     }).then(res => {
       console.log(res);
       let rating = res.data.data;
@@ -43,29 +43,18 @@ export default {
   beforeDestroy() {
     axios({
       method: "DELETE",
-      url: `/record/${this.id}/keys`
-    })
-      .then(() => {
-        console.log("deletesuccess");
-        axios({
-          method: "POST",
-          url: `/record/${this.id}/keys`,
-          params: {
-            keyword: this.tag,
-            rating: this.value
-          }
-        }).then(console.log("postsuccess"));
-      })
-      .catch(
-        axios({
-          method: "POST",
-          url: `/record/${this.id}/keys`,
-          params: {
-            keyword: this.tag,
-            rating: this.value
-          }
-        }).then(console.log("postsuccess"))
-      );
+      url: `/api/record/${this.id}/keys/`
+    }).then(res => {
+      console.log("deletesuccess");
+      axios({
+        method: "POST",
+        url: `/api/record/${this.id}/keys/`,
+        params: {
+          keyword: this.tag,
+          rating: this.value
+        }
+      }).then(console.log("postsuccess"));
+    });
   }
 };
 </script>

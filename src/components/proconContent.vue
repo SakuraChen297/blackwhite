@@ -1,10 +1,20 @@
 <template>
   <div class="Main">
     <div class="proContent">
-      <adviceleft v-for="(item,index) in prodata" :key="index" :inputPro="item.pros" />
+      <adviceleft
+        v-for="(item,index) in prodata"
+        :key="index"
+        :inputPro="item.pros"
+        :delID="item.id"
+      />
     </div>
     <div class="conContent">
-      <adviceright v-for="(item,index) in condata" :key="index" :inputCon="item.cons" />
+      <adviceright
+        v-for="(item,index) in condata"
+        :key="index"
+        :inputCon="item.cons"
+        :delID="item.id"
+      />
     </div>
   </div>
 </template>

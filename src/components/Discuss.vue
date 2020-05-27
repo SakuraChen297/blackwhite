@@ -81,8 +81,8 @@ export default {
     },
     goLite() {
       this.$router.push({
-        name: "Lite",
-        params: { id: this.id, keyData: this.keyData }
+        path: "/Lite",
+        query: { id: this.id, keyData: this.keyData }
       });
     },
     showPopup() {
@@ -94,38 +94,43 @@ export default {
     },
     cacheGet(data) {
       if (data.value > 50) {
-        this.$refs.proconContent.prodata.push(data);
         axios({
           method: "POST",
-          url: `/record/${this.id}/pros/`,
+          url: `/api/record/${this.id}/pros/`,
           params: {
             pros: data.pros,
             tags: this.proKey.join(",")
           }
         }).then(res => {
+          let data = res.data;
+          this.$refs.proconContent.prodata.push(data.pros);
           console.log("pros in success");
         });
       } else if (data.value < 50) {
-        this.$refs.proconContent.condata.push(data);
         axios({
           method: "POST",
-          url: `/record/${this.id}/cons/`,
+          url: `/api/record/${this.id}/cons/`,
           params: {
             cons: data.cons,
             tags: this.conKey.join(",")
           }
-        }).then(console.log("cons in success"));
+        }).then(res => {
+          let data = res.data;
+          this.$refs.proconContent.condata.push(data.cons);
+          console.log("cons in success");
+        });
       }
+      this.$refs.popup.keyData = [];
       this.$refs.popup.input = "";
       this.$refs.popup.value = 50;
       this.show = false;
     }
   },
   mounted() {
-    this.id = this.$route.params.id;
+    this.id = this.$route.query.id;
     axios({
       method: "GET",
-      url: `/record/${this.id}/`
+      url: `/api/record/${this.id}/`
     }).then(res => {
       let data = res.data.data;
       this.title = data.title.title;

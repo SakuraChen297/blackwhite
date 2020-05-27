@@ -17,6 +17,7 @@ export default {
   methods: {
     close() {
       this.show = false;
+      this.$emit("closetag", this.tagName);
     }
   }
 };

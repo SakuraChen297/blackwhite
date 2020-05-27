@@ -1,6 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "5e9fcaa5a7aa6a5510d9a602cb958433",
+    "revision": "7fadb9e85738d1c11a5bae23f6be2ea0",
+    "url": "/blackwhite/faviconfc.ico"
+  },
+  {
+    "revision": "1a98857e8b7871e2b9b9c2cb8fc94e50",
     "url": "/blackwhite/index.html"
   },
   {

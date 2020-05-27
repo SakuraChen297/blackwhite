@@ -23,8 +23,8 @@ export default {
   name: "Lite",
   data() {
     return {
-      id: this.$route.params.id,
-      keyData: this.$route.params.keyData,
+      id: this.$route.query.id,
+      keyData: this.$route.query.keyData,
       tag: []
     };
   },
@@ -32,17 +32,36 @@ export default {
     rateSlider
   },
   methods: {
+    uniq(array) {
+      let temp = {},
+        r = [],
+        len = array.length,
+        val,
+        type;
+      for (let i = 0; i < len; i++) {
+        val = array[i];
+        type = typeof val;
+        if (!temp[val]) {
+          temp[val] = [type];
+          r.push(val);
+        } else if (temp[val].indexOf(type) < 0) {
+          temp[val].push(type);
+          r.push(val);
+        }
+      }
+      return r;
+    },
     goBack() {
       this.$router.push({
-        name: "Discuss",
-        params: { id: this.id }
+        path: "/Discuss",
+        query: { id: this.id }
       });
     }
   },
   mounted() {
     axios({
       method: "GET",
-      url: `/record/${this.id}/pros`
+      url: `/api/record/${this.id}/pros/`
     }).then(res => {
       console.log(res);
       let prodata = res.data.pros;
@@ -53,14 +72,15 @@ export default {
           if (prodata[i].tags === null) {
             continue;
           } else {
-            this.tag = this.tag.concat(prodata[i].tags.split(","));
+            let tag = this.tag.concat(prodata[i].tags.split(","));
+            this.tag = this.uniq(tag);
           }
         }
       }
     });
     axios({
       method: "GET",
-      url: `/record/${this.id}/cons`
+      url: `/api/record/${this.id}/cons/`
     }).then(res => {
       console.log(res);
       let condata = res.data.cons;
@@ -71,7 +91,8 @@ export default {
           if (condata[i].tags === null) {
             continue;
           } else {
-            this.tag = this.tag.concat(condata[i].tags.split(","));
+            let tag = this.tag.concat(condata[i].tags.split(","));
+            this.tag = this.uniq(tag);
           }
         }
       }

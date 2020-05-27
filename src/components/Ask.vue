@@ -8,8 +8,17 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no, viewport-fit=cover"
     />
     <!-- <van-number-keyboard safe-area-inset-bottom /> -->
-    <div class="back" @click="getTitle">Back</div>
-    <van-field class="addTitle" v-model="value" placeholder="What is your dilema?" type="textarea" />
+    <div class="back" @click="goback">Back</div>
+    <van-field
+      @input="debouncer"
+      @compositionstart="flag=false"
+      @compositionend="flag=true"
+      @keyup="pinyin"
+      class="addTitle"
+      v-model="value"
+      placeholder="What is your dilema?"
+      type="textarea"
+    />
     <main class="content">
       <div class="inner">
         <div class="procon">
@@ -28,12 +37,19 @@
       </div>
     </main>
     <van-popup class="popper" v-model="show" position="bottom" round>
-      <popup ref="popup" :title="value" @getcache="cacheGet"></popup>
+      <popup
+        ref="popup"
+        :title="value"
+        @getcache="cacheGet"
+        @getproTag="protagDown"
+        @getconTag="contagDown"
+      ></popup>
     </van-popup>
   </div>
 </template>
 
 <script>
+import _ from "lodash";
 import axios from "axios";
 import proconBar from "./proconBar";
 import proconContent from "./proconContent";
@@ -42,9 +58,12 @@ export default {
   name: "Discuss",
   data() {
     return {
+      flag: true,
       show: false,
       value: "",
-      id: 0
+      id: 0,
+      proKey: [],
+      conKey: []
     };
   },
   components: {
@@ -53,36 +72,70 @@ export default {
     proconBar
   },
   methods: {
-    getTitle() {
-      console.log(this.value);
-      if (this.value === "") {
-        this.$router.replace("/community");
-      } else {
-        axios({
-          method: "POST",
-          url: "/record/",
-          params: {
-            token: this.$store.getters.token,
-            title: this.value
-          }
-        }).then(res => {
-          this.id = res.data.data.id;
-          console.log(this.id);
-          console.log("success");
-          this.$router.replace("/community");
-        });
+    pinyin() {
+      if (this.flag) {
+        this.debouncer();
+      }
+    },
+    goback() {
+      this.$router.replace("/community");
+    },
+    debouncer: _.debounce(function() {
+      axios({
+        method: "POST",
+        url: "/api/record/",
+        params: {
+          token: this.$store.getters.token,
+          title: this.value
+        }
+      }).then(res => {
+        this.id = res.data.data.id;
+        console.log("success");
+      });
+    }, 1000),
+    contagDown(data) {
+      for (let i = 0; i < data.length; i++) {
+        this.conKey.push(data[i]);
+      }
+    },
+
+    protagDown(data) {
+      for (let i = 0; i < data.length; i++) {
+        this.proKey.push(data[i]);
       }
     },
     cacheGet(data) {
-      console.log(data);
       if (data.value > 50) {
-        this.$refs.proconContent.prodata.push(data);
-      } else {
-        this.$refs.proconContent.condata.push(data);
+        axios({
+          method: "POST",
+          url: `/api/record/${this.id}/pros/`,
+          params: {
+            pros: data.pros,
+            tags: this.proKey.join(",")
+          }
+        }).then(res => {
+          let datares = res.data;
+          this.$refs.proconContent.prodata.push(datares.pros);
+          console.log("pros in success");
+        });
+      } else if (data.value < 50) {
+        axios({
+          method: "POST",
+          url: `/api/record/${this.id}/cons/`,
+          params: {
+            cons: data.cons,
+            tags: this.conKey.join(",")
+          }
+        }).then(res => {
+          let datares = res.data;
+          this.$refs.proconContent.condata.push(datares.cons);
+          console.log("cons in success");
+        });
       }
-      this.show = false;
+      this.$refs.popup.keyData = [];
       this.$refs.popup.input = "";
       this.$refs.popup.value = 50;
+      this.show = false;
     },
     showPopup() {
       this.show = true;
@@ -90,38 +143,37 @@ export default {
     preventTouch(e) {
       e.preventDefault();
     }
-  },
-  mounted() {
-    this.$refs.proconContent.prodata = [];
-    this.$refs.proconContent.condata = [];
-  },
-  beforeDestroy() {
-    console.log(this.id);
-    let pro = this.$refs.proconContent.prodata,
-      con = this.$refs.proconContent.condata;
-    if (pro.length !== 0) {
-      for (let i = 0; i < pro.length; i++) {
-        axios({
-          method: "POST",
-          url: `/record/${this.id}/pros`,
-          params: {
-            pros: pro[i].pros
-          }
-        }).then(console.log("pros input successfully"));
-      }
-    }
-    if (con.length !== 0) {
-      for (let i = 0; i < con.length; i++) {
-        axios({
-          method: "POST",
-          url: `/record/${this.id}/cons`,
-          params: {
-            cons: con[i].cons
-          }
-        }).then(console.log("cons input successfully"));
-      }
-    }
   }
+
+  // beforeDestroy() {
+  //   console.log(this.id);
+  //   let pro = this.$refs.proconContent.prodata,
+  //     con = this.$refs.proconContent.condata;
+  //   if (pro.length !== 0) {
+  //     for (let i = 0; i < pro.length; i++) {
+  //       axios({
+  //         method: "POST",
+  //         url: `/api/record/${this.id}/pros`,
+  //         params: {
+  //           tag: this.proKey.join(","),
+  //           pros: pro[i].pros
+  //         }
+  //       }).then(console.log("pros input successfully"));
+  //     }
+  //   }
+  //   if (con.length !== 0) {
+  //     for (let i = 0; i < con.length; i++) {
+  //       axios({
+  //         method: "POST",
+  //         url: `/api/record/${this.id}/cons`,
+  //         params: {
+  //           cons: con[i].cons,
+  //           tags: this.conKey.join(",")
+  //         }
+  //       }).then(console.log("cons input successfully"));
+  //     }
+  //   }
+  // }
 };
 </script>
 

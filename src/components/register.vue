@@ -118,7 +118,7 @@ export default {
       ) {
         axios({
           method: "POST",
-          url: "/user/register/",
+          url: "/api/user/register/",
           params: {
             username: this.username,
             password: this.password,
@@ -169,7 +169,7 @@ export default {
           }
           axios({
             method: "POST",
-            url: "/send/code/",
+            url: "/api/send/code/",
             params: {
               phone_email: this.mailortel
             }

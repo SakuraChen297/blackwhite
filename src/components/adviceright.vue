@@ -17,24 +17,26 @@ export default {
     return {
       show: true,
       a: this.inputCon,
-      id: 0
+      id: this.delID
     };
   },
-  props: ["inputCon"],
+  props: ["inputCon", "delID"],
   methods: {
     getoff() {
-      this.show = false;
-      for (let i = 0; i < this.$parent.condata.length; i++) {
-        if (this.a === this.$parent.condata[i].cons) {
-          this.id = this.$parent.condata[i].id;
-          break;
-        }
-      }
       axios({
         method: "DELETE",
-        url: `/cons/${this.id}`
-      }).then(console.log("Delete successfully"));
-      this.show = false;
+        url: `/api/cons/${this.id}/`,
+        params: {
+          token: this.$store.getters.token
+        }
+      }).then(res => {
+        this.show = false;
+        console.log("Delete successfully");
+      });
+      // axios({
+      //   method: "DELETE",
+      //   url: `/cons/${this.id}`
+      // }).then(console.log("Delete successfully"));
     }
   }
 };

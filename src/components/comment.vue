@@ -33,16 +33,19 @@ export default {
   props: ["titlein", "responsein", "keypass"],
   methods: {
     getoff() {
-      this.show = false;
       axios({
         method: "DELETE",
-        url: `/record/${this.key}`
+        url: `/api/record/${this.key}/`,
+        params: {
+          token: this.$store.getters.token
+        }
       });
+      this.show = false;
     },
     gotolink() {
       this.$router.push({
-        name: "Discuss",
-        params: { id: this.key }
+        path: "/Discuss",
+        query: { id: this.key }
       });
     }
   }

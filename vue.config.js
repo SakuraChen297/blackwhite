@@ -69,27 +69,16 @@ module.exports = {
     open: true, //配置自动启动浏览器  open: 'Google Chrome'-默认启动谷歌
 
     proxy: {
-      "/bd/comment": {
-        target: "http://47.92.236.27:5001/",
-        changeOrigin: false,
-      },
-      "/xf": {
-        target: "http://47.92.236.27:5001/",
-        changeOrigin: false,
-      },
-      "/sentiment/score": {
-        target: "http://47.92.236.27:5001/",
-        changeOrigin: false,
-      },
-      "/test": {
-        target: "http://47.92.236.27:5001/",
-        changeOrigin: false,
-      },
-      "/*/": {
-        target: "http://47.92.236.27:8000/",
+      "/api": {
+        target: "http://47.92.236.27:8090/",
         ws: true,
         changeOrigin: false,
       },
+      // "/*/": {
+      //   target: "http://47.92.236.27:8000/",
+      //   ws: true,
+      //   changeOrigin: false,
+      // },
     },
   },
 };

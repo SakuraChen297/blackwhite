@@ -17,23 +17,26 @@ export default {
     return {
       show: true,
       a: this.inputPro,
-      id: 0
+      id: this.delID
     };
   },
-  props: ["inputPro"],
+  props: ["inputPro", "delID"],
   methods: {
     getoff() {
-      this.show = false;
-      for (let i = 0; i < this.$parent.prodata.length; i++) {
-        if (this.a === this.$parent.prodata[i].pros) {
-          this.id = this.$parent.prodata[i].id;
-          break;
-        }
-      }
       axios({
         method: "DELETE",
-        url: `/pros/${this.id}`
-      }).then(console.log("Delete successfully"));
+        url: `/api/pros/${this.id}/`,
+        params: {
+          token: this.$store.getters.token
+        }
+      }).then(res => {
+        this.show = false;
+        console.log("Delete successfully");
+      });
+      // axios({
+      //   method: "DELETE",
+      //   url: `/pros/${this.id}`
+      // }).then(console.log("Delete successfully"));
     }
   }
 };
