@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/blackwhite/precache-manifest.47f27e8b3db31bdd975a3bfa13ea4fbe.js"
+  "/blackwhite/precache-manifest.283659e5b91be3a8c88f70d99e7b10b6.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "black-white-pages"});
