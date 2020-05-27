@@ -4,7 +4,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/blackwhite/index.html"
   },
   {
-    "revision": "cf812b9b43f786f39c46badbc5b225fd",
+    "revision": "55bfbeb1e2ab1a2965b8b0736e68125a",
     "url": "/blackwhite/manifest.json"
   },
   {
