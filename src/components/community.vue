@@ -1,5 +1,9 @@
 <template>
   <div class="Main">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no, viewport-fit=cover"
+    />
     <van-search class="searchIn" v-model="value" shape="round" placeholder="请输入搜索关键词">
       <template #left>
         <van-icon name="wap-nav" size="18" color="#c0c2d4" class="search" />
